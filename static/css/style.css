@@ -103,8 +103,7 @@ body {
 
 .stats-grid {
     display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 20px;
     margin-top: 25px;
 }
@@ -456,4 +455,95 @@ select {
     background: #111827;
     color: #94a3b8;
     border-top: 1px solid #233045;
+}
+
+.notification-wrapper {
+    position: relative;
+}
+
+.notification-btn {
+    background: #1e293b;
+    border: none;
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    font-size: 18px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ef4444;
+    color: white;
+    font-size: 12px;
+    padding: 3px 7px;
+    border-radius: 50%;
+}
+
+.notification-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 280px;
+    background: #111827;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .4);
+    z-index: 1000;
+}
+
+.notification-wrapper:hover .notification-dropdown {
+    display: block;
+}
+
+.notification-wrapper {
+    position: relative;
+}
+
+.notification-btn {
+    background: #1e293b;
+    border: none;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    position: relative;
+}
+
+.notification-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ef4444;
+    color: white;
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 50%;
+}
+
+.notification-dropdown {
+    display: none;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 320px;
+    background: #111827;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .4);
+    z-index: 999;
+}
+
+.notification-wrapper:hover .notification-dropdown {
+    display: block;
+}
+
+.alert-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #233045;
 }

@@ -73,6 +73,16 @@ def dashboard():
     )
     low_stock = cursor.fetchone()[0]
 
+    # Low Stock List For Notifications
+
+    cursor.execute("""
+        SELECT name, stock
+        FROM products
+        WHERE stock < 10
+        ORDER BY stock ASC
+    """)
+    low_stock_products = cursor.fetchall()
+
     # Recent Products
 
     cursor.execute("""
@@ -86,52 +96,85 @@ def dashboard():
     # Total Revenue
 
     cursor.execute("""
-    SELECT IFNULL(
-        SUM(quantity * selling_price),
-        0
-    )
-    FROM sales
+        SELECT IFNULL(
+            SUM(quantity * selling_price),
+            0
+        )
+        FROM sales
     """)
     total_revenue = cursor.fetchone()[0]
 
     # Inventory Value
 
     cursor.execute("""
-    SELECT IFNULL(
-        SUM(stock * price),
-        0
-    )
-    FROM products
+        SELECT IFNULL(
+            SUM(stock * price),
+            0
+        )
+        FROM products
     """)
     inventory_value = cursor.fetchone()[0]
 
     # Recent Sales
 
     cursor.execute("""
-    SELECT products.name,
-           sales.quantity,
-           sales.sale_date
-    FROM sales
-    JOIN products
-    ON sales.product_id = products.id
-    ORDER BY sales.id DESC
-    LIMIT 5
+        SELECT products.name,
+               sales.quantity,
+               sales.sale_date
+        FROM sales
+        JOIN products
+        ON sales.product_id = products.id
+        ORDER BY sales.id DESC
+        LIMIT 5
     """)
     recent_sales = cursor.fetchall()
 
     # Recent Purchases
 
     cursor.execute("""
-    SELECT products.name,
-           purchases.quantity,
-           purchases.purchase_date
-    FROM purchases
-    JOIN products
-    ON purchases.product_id = products.id
-    ORDER BY purchases.id DESC
-    LIMIT 5
+        SELECT products.name,
+               purchases.quantity,
+               purchases.purchase_date
+        FROM purchases
+        JOIN products
+        ON purchases.product_id = products.id
+        ORDER BY purchases.id DESC
+        LIMIT 5
     """)
     recent_purchases = cursor.fetchall()
+
+    from datetime import date
+
+    today = date.today().strftime("%Y-%m-%d")
+
+    # Today's Revenue
+
+    cursor.execute("""
+        SELECT IFNULL(
+            SUM(quantity * selling_price),
+            0
+        )
+        FROM sales
+        WHERE sale_date = ?
+    """, (today,))
+    today_sales = cursor.fetchone()[0]
+
+    # Total Orders
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM sales
+    """)
+    total_orders = cursor.fetchone()[0]
+
+    # Today's Orders
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM sales
+        WHERE sale_date = ?
+    """, (today,))
+    today_orders = cursor.fetchone()[0]
 
     conn.close()
 
@@ -139,11 +182,15 @@ def dashboard():
         "dashboard.html",
         total_products=total_products,
         low_stock=low_stock,
+        low_stock_products=low_stock_products,
         recent_products=recent_products,
         recent_sales=recent_sales,
         recent_purchases=recent_purchases,
         total_revenue=total_revenue,
-        inventory_value=inventory_value
+        inventory_value=inventory_value,
+        today_sales=today_sales,
+        total_orders=total_orders,
+        today_orders=today_orders
     )
 
 

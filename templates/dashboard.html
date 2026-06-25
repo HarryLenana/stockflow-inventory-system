@@ -62,15 +62,14 @@
             </li>
 
         </ul>
+
         <div class="sidebar-footer">
 
             <div class="footer-card">
 
                 <h4>System Status</h4>
 
-                <p>
-                    🟢 Online
-                </p>
+                <p>🟢 Online</p>
 
             </div>
 
@@ -78,10 +77,10 @@
 
     </aside>
 
-    <!-- Main Area -->
+    <!-- Main Content -->
     <main class="main-content">
 
-        <!-- Top Header -->
+        <!-- Topbar -->
         <div class="topbar">
 
             <div class="top-left">
@@ -104,11 +103,48 @@
 
             <div class="top-right">
 
-                <div class="notification-box">
-                    🔔
-                    <span class="notification-badge">
-                        3
-                    </span>
+                <div class="notification-wrapper">
+
+                    <button class="notification-btn">
+
+                        🔔
+
+                        {% if low_stock > 0 %}
+                        <span class="notification-count">
+                            {{ low_stock }}
+                        </span>
+                        {% endif %}
+
+                    </button>
+
+                    <div class="notification-dropdown">
+
+                        <h4>Stock Alerts</h4>
+
+                        {% if low_stock_products %}
+
+                        {% for product in low_stock_products %}
+
+                        <div class="alert-item">
+
+                            ⚠️ {{ product[0] }}
+
+                            <span>
+                                ({{ product[1] }} left)
+                            </span>
+
+                        </div>
+
+                        {% endfor %}
+
+                        {% else %}
+
+                        <p>✅ Inventory is healthy.</p>
+
+                        {% endif %}
+
+                    </div>
+
                 </div>
 
                 <div class="profile-box">
@@ -139,51 +175,38 @@
         <div class="stats-grid">
 
             <div class="stat-card">
-
                 <span>Total Products</span>
-
                 <h2>{{ total_products }}</h2>
-
             </div>
 
             <div class="stat-card">
-
                 <span>Low Stock Items</span>
-
                 <h2>{{ low_stock }}</h2>
-
             </div>
 
             <div class="stat-card">
-
-                <span>Today's Sales</span>
-
-                <h2>KES 45K</h2>
-
+                <span>Today's Revenue</span>
+                <h2>KES {{ "%.0f"|format(today_sales) }}</h2>
             </div>
 
             <div class="stat-card">
+                <span>Today's Orders</span>
+                <h2>{{ today_orders }}</h2>
+            </div>
 
-                <span>Total Revenue Generated</span>
-
+            <div class="stat-card">
+                <span>Total Revenue</span>
                 <h2>KES {{ "%.0f"|format(total_revenue) }}</h2>
-
             </div>
 
             <div class="stat-card">
-
                 <span>Inventory Value</span>
-
-                <h2>
-                    KES {{ "%.0f"|format(inventory_value) }}
-                </h2>
-
+                <h2>KES {{ "%.0f"|format(inventory_value) }}</h2>
             </div>
 
         </div>
 
         <!-- Quick Actions -->
-
         <h3 class="section-title">
             Quick Actions
         </h3>
@@ -208,8 +231,7 @@
 
         </div>
 
-        <!-- Analytics Section -->
-
+        <!-- Charts -->
         <h3 class="section-title">
             Analytics Overview
         </h3>
@@ -234,6 +256,7 @@
 
         </div>
 
+        <!-- Widgets -->
         <h3 class="section-title">
             Inventory Widgets
         </h3>
@@ -282,8 +305,7 @@
 
         </div>
 
-        <!-- Recent Activity -->
-
+        <!-- Recent Sales & Purchases -->
         <div class="widgets-grid">
 
             <div class="widget-card">
