@@ -547,3 +547,212 @@ select {
     padding: 10px 0;
     border-bottom: 1px solid #233045;
 }
+
+#topBtn {
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: #4f7cff;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+    z-index: 999;
+    transition: .3s;
+}
+
+#topBtn:hover {
+    background: #3667e0;
+    transform: translateY(-3px);
+}
+
+/* ==========================
+   Back Button
+========================== */
+
+.back-btn {
+
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    padding: 10px 20px;
+
+    background: #374151;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    transition: .3s;
+
+    font-weight: 600;
+
+}
+
+.back-btn:hover {
+
+    background: #3b82f6;
+
+}
+
+/* ==========================
+   Sidebar Footer
+========================== */
+
+.sidebar-footer {
+
+    margin-top: auto;
+
+    padding-top: 20px;
+
+}
+
+.footer-card {
+
+    background: #1e293b;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+}
+
+.footer-card hr {
+
+    border: none;
+
+    border-top: 1px solid rgba(255, 255, 255, .15);
+
+    margin: 15px 0;
+
+}
+
+.footer-link {
+
+    display: block;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.footer-link:hover {
+
+    color: #3b82f6;
+
+}
+
+.version-text {
+
+    display: block;
+
+    margin-top: 10px;
+
+    color: #94a3b8;
+
+}
+
+/* ==========================
+   Top Menu Dropdown
+========================== */
+
+.menu-dropdown {
+
+    position: relative;
+
+    display: inline-block;
+
+}
+
+.menu-btn {
+
+    width: 50px;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #1f2937;
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+}
+
+.menu-btn:hover {
+
+    background: #2563eb;
+
+}
+
+.menu-content {
+
+    display: none;
+
+    position: absolute;
+
+    top: 60px;
+
+    left: 0;
+
+    width: 220px;
+
+    background: #1e293b;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+
+    z-index: 999;
+
+}
+
+.menu-content a {
+
+    display: block;
+
+    padding: 14px 18px;
+
+    color: white;
+
+    text-decoration: none;
+
+    transition: .3s;
+
+}
+
+.menu-content a:hover {
+
+    background: #2563eb;
+
+}
+
+.menu-content hr {
+
+    border: none;
+
+    border-top: 1px solid rgba(255, 255, 255, .1);
+
+}

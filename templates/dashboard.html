@@ -61,6 +61,13 @@
                 </a>
             </li>
 
+            <li>
+                <a href="/about">
+                    <i class="fas fa-circle-info"></i>
+                    About
+                </a>
+            </li>
+
         </ul>
 
         <div class="sidebar-footer">
@@ -70,6 +77,17 @@
                 <h4>System Status</h4>
 
                 <p>🟢 Online</p>
+
+                <hr>
+
+                <a href="/about" class="footer-link">
+                    <i class="fas fa-circle-info"></i>
+                    About StockFlow
+                </a>
+
+                <small class="version-text">
+                    Version 1.0
+                </small>
 
             </div>
 
@@ -85,9 +103,44 @@
 
             <div class="top-left">
 
-                <button class="menu-btn">
-                    ☰
-                </button>
+                <div class="menu-dropdown">
+
+                    <button class="menu-btn" id="menuBtn">
+                        ☰
+                    </button>
+
+                    <div class="menu-content" id="menuContent">
+
+                        <a href="/dashboard">
+                            🏠 Dashboard
+                        </a>
+
+                        <a href="#">
+                            👤 Profile
+                        </a>
+
+                        <a href="/settings">
+                            ⚙️ Settings
+                        </a>
+
+                        <a href="/about">
+                            ℹ️ About
+                        </a>
+
+                        <a href="#">
+                            🌙 Dark Mode
+                            <small>(Coming Soon)</small>
+                        </a>
+
+                        <hr>
+
+                        <a href="/logout">
+                            🚪 Logout
+                        </a>
+
+                    </div>
+
+                </div>
 
                 <div>
 
@@ -150,6 +203,10 @@
                 <div class="profile-box">
                     👤 Admin
                 </div>
+
+                <a href="/about" class="logout-btn">
+                    ℹ️ About
+                </a>
 
                 <a href="/logout" class="logout-btn">
                     🚪 Logout
@@ -229,30 +286,9 @@
                 📈 Reports
             </a>
 
-        </div>
-
-        <!-- Charts -->
-        <h3 class="section-title">
-            Analytics Overview
-        </h3>
-
-        <div class="charts-grid">
-
-            <div class="chart-card">
-
-                <h3>Revenue Trend</h3>
-
-                <canvas id="revenueChart"></canvas>
-
-            </div>
-
-            <div class="chart-card">
-
-                <h3>Inventory Distribution</h3>
-
-                <canvas id="inventoryChart"></canvas>
-
-            </div>
+            <a href="/about" class="action-card">
+                ℹ️ About StockFlow
+            </a>
 
         </div>
 
@@ -298,6 +334,26 @@
                 <p>
                     Inventory levels are healthy.
                 </p>
+
+                {% endif %}
+
+            </div>
+
+            <div class="widget-card">
+
+                <h3>🏆 Top Selling Product</h3>
+
+                {% if top_product %}
+
+                <h2>{{ top_product[0] }}</h2>
+
+                <p>
+                    {{ top_product[1] }} units sold
+                </p>
+
+                {% else %}
+
+                <p>No sales recorded yet.</p>
 
                 {% endif %}
 

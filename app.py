@@ -59,21 +59,25 @@ def dashboard():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
+    # ==========================
     # Total Products
+    # ==========================
 
-    cursor.execute(
-        "SELECT COUNT(*) FROM products"
-    )
+    cursor.execute("SELECT COUNT(*) FROM products")
     total_products = cursor.fetchone()[0]
 
-    # Low Stock Products
+    # ==========================
+    # Low Stock
+    # ==========================
 
     cursor.execute(
         "SELECT COUNT(*) FROM products WHERE stock < 10"
     )
     low_stock = cursor.fetchone()[0]
 
-    # Low Stock List For Notifications
+    # ==========================
+    # Low Stock Products
+    # ==========================
 
     cursor.execute("""
         SELECT name, stock
@@ -83,7 +87,9 @@ def dashboard():
     """)
     low_stock_products = cursor.fetchall()
 
+    # ==========================
     # Recent Products
+    # ==========================
 
     cursor.execute("""
         SELECT *
@@ -93,7 +99,9 @@ def dashboard():
     """)
     recent_products = cursor.fetchall()
 
+    # ==========================
     # Total Revenue
+    # ==========================
 
     cursor.execute("""
         SELECT IFNULL(
@@ -104,7 +112,9 @@ def dashboard():
     """)
     total_revenue = cursor.fetchone()[0]
 
+    # ==========================
     # Inventory Value
+    # ==========================
 
     cursor.execute("""
         SELECT IFNULL(
@@ -115,12 +125,15 @@ def dashboard():
     """)
     inventory_value = cursor.fetchone()[0]
 
+    # ==========================
     # Recent Sales
+    # ==========================
 
     cursor.execute("""
-        SELECT products.name,
-               sales.quantity,
-               sales.sale_date
+        SELECT
+            products.name,
+            sales.quantity,
+            sales.sale_date
         FROM sales
         JOIN products
         ON sales.product_id = products.id
@@ -129,12 +142,15 @@ def dashboard():
     """)
     recent_sales = cursor.fetchall()
 
+    # ==========================
     # Recent Purchases
+    # ==========================
 
     cursor.execute("""
-        SELECT products.name,
-               purchases.quantity,
-               purchases.purchase_date
+        SELECT
+            products.name,
+            purchases.quantity,
+            purchases.purchase_date
         FROM purchases
         JOIN products
         ON purchases.product_id = products.id
@@ -143,11 +159,13 @@ def dashboard():
     """)
     recent_purchases = cursor.fetchall()
 
+    # ==========================
+    # Today's Revenue
+    # ==========================
+
     from datetime import date
 
     today = date.today().strftime("%Y-%m-%d")
-
-    # Today's Revenue
 
     cursor.execute("""
         SELECT IFNULL(
@@ -157,24 +175,45 @@ def dashboard():
         FROM sales
         WHERE sale_date = ?
     """, (today,))
+
     today_sales = cursor.fetchone()[0]
 
+    # ==========================
     # Total Orders
+    # ==========================
 
-    cursor.execute("""
-        SELECT COUNT(*)
-        FROM sales
-    """)
+    cursor.execute("SELECT COUNT(*) FROM sales")
     total_orders = cursor.fetchone()[0]
 
+    # ==========================
     # Today's Orders
+    # ==========================
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM sales
         WHERE sale_date = ?
     """, (today,))
+
     today_orders = cursor.fetchone()[0]
+
+    # ==========================
+    # Top Selling Product
+    # ==========================
+
+    cursor.execute("""
+        SELECT
+            products.name,
+            SUM(sales.quantity) AS sold
+        FROM sales
+        JOIN products
+        ON sales.product_id = products.id
+        GROUP BY products.name
+        ORDER BY sold DESC
+        LIMIT 1
+    """)
+
+    top_product = cursor.fetchone()
 
     conn.close()
 
@@ -190,7 +229,8 @@ def dashboard():
         inventory_value=inventory_value,
         today_sales=today_sales,
         total_orders=total_orders,
-        today_orders=today_orders
+        today_orders=today_orders,
+        top_product=top_product,
     )
 
 
@@ -229,7 +269,7 @@ def products():
 
 
 @app.route("/add-product", methods=["GET", "POST"])
-def add_product():
+def add_product(id):
 
     if request.method == "POST":
 
