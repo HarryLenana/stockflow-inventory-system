@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <h1>🚚 Suppliers Management</h1>
+
+    <div class="table-card">
+
+        <a href="/add-supplier">
+            <button class="btn-green">
+                + Add Supplier
+            </button>
+        </a>
+        <a href="/export-purchases">
+            <button class="btn-green">
+                📥 Export CSV
+            </button>
+        </a>
+
+        <br><br>
+
+        <form method="GET">
+
+            <input type="text" name="search" placeholder="Search Supplier">
+
+            <button class="btn-green">
+                Search
+            </button>
+
+        </form>
+
+        <br>
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for supplier in suppliers %}
+
+                <tr>
+
+                    <td>{{ supplier[0] }}</td>
+                    <td>{{ supplier[1] }}</td>
+                    <td>{{ supplier[2] }}</td>
+                    <td>{{ supplier[3] }}</td>
+                    <td>{{ supplier[4] }}</td>
+
+                    <td>
+
+                        <a href="/edit-supplier/{{ supplier[0] }}">
+                            ✏️ Edit
+                        </a>
+
+                        |
+
+                        <a href="/delete-supplier/{{ supplier[0] }}" onclick="return confirm('Delete supplier?')">
+                            🗑 Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <h1>📦 StockFlow</h1>
+
+        <p>
+            Modern Inventory Management System
+        </p>
+
+        <br>
+
+        {% if error %}
+
+        <div class="error-box">
+            {{ error }}
+        </div>
+
+        <br>
+
+        {% endif %}
+
+        <form method="POST">
+
+            <input type="text" name="username" placeholder="Username" required>
+
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit" class="btn-green">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <br>
+
+        <small>
+
+            Demo Login
+
+            <br><br>
+
+            Username:
+            <strong>admin</strong>
+
+            <br>
+
+            Password:
+            <strong>admin123</strong>
+
+        </small>
+
+    </div>
+
+</div>
+
+{% endblock %}

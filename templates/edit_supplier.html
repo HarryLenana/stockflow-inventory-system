@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <h1>✏️ Edit Supplier</h1>
+
+    <div class="table-card">
+
+        <form method="POST">
+
+            <input type="text" name="name" value="{{ supplier[1] }}" required>
+
+            <input type="text" name="phone" value="{{ supplier[2] }}" required>
+
+            <input type="email" name="email" value="{{ supplier[3] }}" required>
+
+            <input type="text" name="address" value="{{ supplier[4] }}" required>
+
+            <button class="btn-green">
+                Update Supplier
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

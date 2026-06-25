@@ -1,0 +1,335 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>📦 StockFlow</h2>
+
+            <small>
+                Inventory Suite
+            </small>
+
+        </div>
+
+        <ul class="menu">
+
+            <li class="active">
+                <a href="/dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="/products">
+                    <i class="fas fa-box"></i>
+                    Products
+                </a>
+            </li>
+
+            <li>
+                <a href="/suppliers">
+                    <i class="fas fa-truck"></i>
+                    Suppliers
+                </a>
+            </li>
+
+            <li>
+                <a href="/purchases">
+                    <i class="fas fa-cart-plus"></i>
+                    Purchases
+                </a>
+            </li>
+
+            <li>
+                <a href="/sales">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Sales
+                </a>
+            </li>
+
+            <li>
+                <a href="/reports">
+                    <i class="fas fa-chart-pie"></i>
+                    Reports
+                </a>
+            </li>
+
+        </ul>
+        <div class="sidebar-footer">
+
+            <div class="footer-card">
+
+                <h4>System Status</h4>
+
+                <p>
+                    🟢 Online
+                </p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- Main Area -->
+    <main class="main-content">
+
+        <!-- Top Header -->
+        <div class="topbar">
+
+            <div class="top-left">
+
+                <button class="menu-btn">
+                    ☰
+                </button>
+
+                <div>
+
+                    <h2>Inventory Dashboard</h2>
+
+                    <p class="welcome-text">
+                        Welcome back to StockFlow
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="top-right">
+
+                <div class="notification-box">
+                    🔔
+                    <span class="notification-badge">
+                        3
+                    </span>
+                </div>
+
+                <div class="profile-box">
+                    👤 Admin
+                </div>
+
+                <a href="/logout" class="logout-btn">
+                    🚪 Logout
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+
+            <h2>📊 Inventory Overview</h2>
+
+            <p>
+                Manage products, suppliers and stock levels
+                from one place.
+            </p>
+
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <span>Total Products</span>
+
+                <h2>{{ total_products }}</h2>
+
+            </div>
+
+            <div class="stat-card">
+
+                <span>Low Stock Items</span>
+
+                <h2>{{ low_stock }}</h2>
+
+            </div>
+
+            <div class="stat-card">
+
+                <span>Today's Sales</span>
+
+                <h2>KES 45K</h2>
+
+            </div>
+
+            <div class="stat-card">
+
+                <span>Total Revenue Generated</span>
+
+                <h2>KES {{ "%.0f"|format(total_revenue) }}</h2>
+
+            </div>
+
+            <div class="stat-card">
+
+                <span>Inventory Value</span>
+
+                <h2>
+                    KES {{ "%.0f"|format(inventory_value) }}
+                </h2>
+
+            </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+
+        <h3 class="section-title">
+            Quick Actions
+        </h3>
+
+        <div class="action-grid">
+
+            <a href="/add-product" class="action-card">
+                ➕ Add Product
+            </a>
+
+            <a href="/products" class="action-card">
+                📦 Products
+            </a>
+
+            <a href="/suppliers" class="action-card">
+                🚚 Suppliers
+            </a>
+
+            <a href="/reports" class="action-card">
+                📈 Reports
+            </a>
+
+        </div>
+
+        <!-- Analytics Section -->
+
+        <h3 class="section-title">
+            Analytics Overview
+        </h3>
+
+        <div class="charts-grid">
+
+            <div class="chart-card">
+
+                <h3>Revenue Trend</h3>
+
+                <canvas id="revenueChart"></canvas>
+
+            </div>
+
+            <div class="chart-card">
+
+                <h3>Inventory Distribution</h3>
+
+                <canvas id="inventoryChart"></canvas>
+
+            </div>
+
+        </div>
+
+        <h3 class="section-title">
+            Inventory Widgets
+        </h3>
+
+        <div class="widgets-grid">
+
+            <div class="widget-card">
+
+                <h3>📦 Recent Products</h3>
+
+                <ul>
+
+                    {% for product in recent_products %}
+
+                    <li>
+                        {{ product[1] }}
+                        ({{ product[3] }} units)
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+            <div class="widget-card">
+
+                <h3>⚠️ Stock Alert</h3>
+
+                {% if low_stock > 0 %}
+
+                <p>
+                    {{ low_stock }}
+                    products need restocking.
+                </p>
+
+                {% else %}
+
+                <p>
+                    Inventory levels are healthy.
+                </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <!-- Recent Activity -->
+
+        <div class="widgets-grid">
+
+            <div class="widget-card">
+
+                <h3>💰 Recent Sales</h3>
+
+                <ul>
+
+                    {% for sale in recent_sales %}
+
+                    <li>
+                        {{ sale[0] }}
+                        - {{ sale[1] }} units
+                        ({{ sale[2] }})
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+            <div class="widget-card">
+
+                <h3>🛒 Recent Purchases</h3>
+
+                <ul>
+
+                    {% for purchase in recent_purchases %}
+
+                    <li>
+                        {{ purchase[0] }}
+                        - {{ purchase[1] }} units
+                        ({{ purchase[2] }})
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}

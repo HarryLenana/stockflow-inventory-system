@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <h1>📊 Business Reports</h1>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <span>Total Products</span>
+            <h2>{{ total_products }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <span>Total Suppliers</span>
+            <h2>{{ total_suppliers }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <span>Total Purchases</span>
+            <h2>{{ total_purchases }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <span>Total Sales</span>
+            <h2>{{ total_sales }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <span>Total Revenue</span>
+            <h2>KES {{ "%.2f"|format(total_revenue) }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <span>Inventory Value</span>
+            <h2>KES {{ "%.2f"|format(inventory_value) }}</h2>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <div class="table-card">
+
+        <h2>📈 Business Summary</h2>
+
+        <br>
+
+        <p>
+            Total Products in System:
+            <strong>{{ total_products }}</strong>
+        </p>
+
+        <br>
+
+        <p>
+            Registered Suppliers:
+            <strong>{{ total_suppliers }}</strong>
+        </p>
+
+        <br>
+
+        <p>
+            Completed Purchases:
+            <strong>{{ total_purchases }}</strong>
+        </p>
+
+        <br>
+
+        <p>
+            Completed Sales:
+            <strong>{{ total_sales }}</strong>
+        </p>
+
+        <br>
+
+        <p>
+            Revenue Generated:
+            <strong>KES {{ "%.2f"|format(total_revenue) }}</strong>
+        </p>
+
+        <br>
+
+        <p>
+            Current Inventory Value:
+            <strong>KES {{ "%.2f"|format(inventory_value) }}</strong>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

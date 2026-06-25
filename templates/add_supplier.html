@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <h1>➕ Add Supplier</h1>
+
+    <div class="table-card">
+
+        <form method="POST">
+
+            <input type="text" name="name" placeholder="Supplier Name" required>
+
+            <input type="text" name="phone" placeholder="Phone Number" required>
+
+            <input type="email" name="email" placeholder="Email Address" required>
+
+            <input type="text" name="address" placeholder="Address" required>
+
+            <button class="btn-green">
+                Save Supplier
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

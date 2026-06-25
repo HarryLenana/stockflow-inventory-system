@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <h1>🛒 Add Purchase</h1>
+
+    <div class="table-card">
+
+        <form method="POST">
+
+            <select name="product_id" required>
+
+                {% for product in products %}
+
+                <option value="{{ product[0] }}">
+                    {{ product[1] }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <select name="supplier_id" required>
+
+                {% for supplier in suppliers %}
+
+                <option value="{{ supplier[0] }}">
+                    {{ supplier[1] }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <input type="number" name="quantity" placeholder="Quantity" required>
+
+            <input type="number" step="0.01" name="cost" placeholder="Purchase Cost" required>
+
+            <input type="date" name="purchase_date" required>
+
+            <button class="btn-green">
+                Save Purchase
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

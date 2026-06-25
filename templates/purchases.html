@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <h1>🛒 Purchases</h1>
+
+    <div class="table-card">
+
+        <a href="/add-purchase">
+            <button class="btn-green">
+                + Add Purchase
+            </button>
+        </a>
+
+        <a href="/export-sales">
+            <button class="btn-green">
+                📥 Export CSV
+            </button>
+        </a>
+
+        <br><br>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Supplier</th>
+                    <th>Quantity</th>
+                    <th>Cost</th>
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for purchase in purchases %}
+
+                <tr>
+
+                    <td>{{ purchase[0] }}</td>
+                    <td>{{ purchase[1] }}</td>
+                    <td>{{ purchase[2] }}</td>
+                    <td>{{ purchase[3] }}</td>
+                    <td>KES {{ purchase[4] }}</td>
+                    <td>{{ purchase[5] }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
