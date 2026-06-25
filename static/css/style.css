@@ -8,6 +8,9 @@
 body {
     background: #0b1120;
     color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* DASHBOARD */
@@ -442,4 +445,15 @@ select {
     text-align: center;
     margin-bottom: 25px;
     font-size: 14px;
+}
+
+/* Sticky Footer */
+
+.footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px;
+    background: #111827;
+    color: #94a3b8;
+    border-top: 1px solid #233045;
 }
