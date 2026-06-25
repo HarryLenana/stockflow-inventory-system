@@ -231,10 +231,11 @@ form input {
 }
 
 .login-card {
-    width: 420px;
+    width: 460px;
     background: #111827;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 45px;
+    border-radius: 24px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, .35);
 }
 
 .login-card h1 {
@@ -406,4 +407,34 @@ select {
     color: #94a3b8;
     margin-top: 40px;
     border-top: 1px solid #233045;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px auto;
+}
+
+.logo h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.logo small {
+    color: #94a3b8;
+}
+
+.login-logo {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 15px auto;
 }
