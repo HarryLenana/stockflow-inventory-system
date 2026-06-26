@@ -1,3 +1,5 @@
+from flask import flash
+
 import os
 import shutil
 import sqlite3
@@ -341,28 +343,27 @@ def settings():
 
     if request.method == "POST":
 
+        # ==========================
+        # SAVE SETTINGS
+        # ==========================
+
         cursor.execute("""
-
-        UPDATE settings
-
-        SET
-
-        company_name=?,
-        company_email=?,
-        company_phone=?,
-        company_address=?,
-        company_website=?,
-        currency=?,
-        tax_rate=?,
-        low_stock=?,
-        dark_mode=?,
-        email_alerts=?,
-        sales_alerts=?,
-        purchase_alerts=?,
-        stock_alerts=?
-
-        WHERE id=1
-
+            UPDATE settings
+            SET
+                company_name=?,
+                company_email=?,
+                company_phone=?,
+                company_address=?,
+                company_website=?,
+                currency=?,
+                tax_rate=?,
+                low_stock=?,
+                dark_mode=?,
+                email_alerts=?,
+                sales_alerts=?,
+                purchase_alerts=?,
+                stock_alerts=?
+            WHERE id=1
         """, (
 
             request.form["company_name"],
@@ -384,20 +385,78 @@ def settings():
 
         conn.commit()
 
-    cursor.execute("SELECT * FROM settings")
+        # ==========================
+        # CHANGE PASSWORD
+        # ==========================
 
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if current_password and new_password and confirm_password:
+
+            cursor.execute("""
+                SELECT password
+                FROM users
+                WHERE username=?
+            """, (session["user"],))
+
+            user = cursor.fetchone()
+
+            if user:
+
+                if user[0] != current_password:
+
+                    flash(
+                        "Current password is incorrect.",
+                        "danger"
+                    )
+
+                elif new_password != confirm_password:
+
+                    flash(
+                        "New passwords do not match.",
+                        "danger"
+                    )
+
+                else:
+
+                    cursor.execute("""
+                        UPDATE users
+                        SET password=?
+                        WHERE username=?
+                    """, (
+                        new_password,
+                        session["user"]
+                    ))
+
+                    conn.commit()
+
+                    flash(
+                        "Password changed successfully!",
+                        "success"
+                    )
+
+        else:
+
+            flash(
+                "Settings saved successfully!",
+                "success"
+            )
+
+    # ==========================
+    # LOAD SETTINGS
+    # ==========================
+
+    cursor.execute("SELECT * FROM settings")
     settings = cursor.fetchone()
 
     system_info = {
 
         "python": platform.python_version(),
-
         "flask": flask.__version__,
-
         "database": "SQLite",
-
         "os": platform.system(),
-
         "time": datetime.now().strftime("%d %B %Y %H:%M")
 
     }
@@ -481,7 +540,7 @@ def system_info():
     }
 
 
-@app.route("/profile")
+@app.route("/profile", methods=["GET", "POST"])
 def profile():
 
     if "user" not in session:
@@ -490,96 +549,47 @@ def profile():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
-    from datetime import date
+    # ==========================
+    # SAVE PROFILE
+    # ==========================
+    if request.method == "POST":
 
-    today = date.today().strftime("%Y-%m-%d")
+        full_name = request.form["full_name"]
+        email = request.form["email"]
+        phone = request.form["phone"]
 
-    # Today's Revenue
+        cursor.execute("""
+            UPDATE users
+            SET
+                full_name = ?,
+                email = ?,
+                phone = ?
+            WHERE username = ?
+        """, (
+            full_name,
+            email,
+            phone,
+            session["user"]
+        ))
+
+        conn.commit()
+
+    # ==========================
+    # LOAD USER
+    # ==========================
     cursor.execute("""
-        SELECT IFNULL(
-            SUM(quantity * selling_price),
-            0
-        )
-        FROM sales
-        WHERE sale_date = ?
-    """, (today,))
-    today_sales = cursor.fetchone()[0]
+        SELECT *
+        FROM users
+        WHERE username = ?
+    """, (session["user"],))
 
-    # Total Revenue
-    cursor.execute("""
-        SELECT IFNULL(
-            SUM(quantity * selling_price),
-            0
-        )
-        FROM sales
-    """)
-    total_revenue = cursor.fetchone()[0]
-
-    # Total Products
-    cursor.execute("""
-        SELECT COUNT(*)
-        FROM products
-    """)
-    total_products = cursor.fetchone()[0]
-
-    # Total Orders
-    cursor.execute("""
-        SELECT COUNT(*)
-        FROM sales
-    """)
-    total_orders = cursor.fetchone()[0]
-
-    # Low Stock
-    cursor.execute("""
-        SELECT COUNT(*)
-        FROM products
-        WHERE stock < 10
-    """)
-    low_stock = cursor.fetchone()[0]
+    user = cursor.fetchone()
 
     conn.close()
 
     return render_template(
         "profile.html",
-        today_sales=today_sales,
-        total_revenue=total_revenue,
-        total_products=total_products,
-        total_orders=total_orders,
-        low_stock=low_stock
-    )
-
-
-@app.route("/products")
-def products():
-
-    if "user" not in session:
-        return redirect("/")
-
-    search = request.args.get("search", "")
-
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
-
-    if search:
-
-        cursor.execute(
-            "SELECT * FROM products WHERE name LIKE ?",
-            ('%' + search + '%',)
-        )
-
-    else:
-
-        cursor.execute(
-            "SELECT * FROM products"
-        )
-
-    products = cursor.fetchall()
-
-    conn.close()
-
-    return render_template(
-        "products.html",
-        products=products
+        user=user
     )
 
 

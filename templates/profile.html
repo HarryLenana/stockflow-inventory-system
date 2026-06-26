@@ -4,7 +4,9 @@
 
 <div class="profile-wrapper">
 
-    <!-- Sidebar -->
+    <!-- =========================
+         PROFILE SIDEBAR
+    ========================== -->
 
     <aside class="profile-sidebar">
 
@@ -13,9 +15,9 @@
             <img class="profile-avatar" src="{{ url_for('static', filename='images/default-user.png') }}"
                 alt="Profile Picture">
 
-            <h2>{{ session['user'] }}</h2>
+            <h2>{{ user[1] }}</h2>
 
-            <p>System Administrator</p>
+            <p>{{ user[6] }}</p>
 
         </div>
 
@@ -23,7 +25,7 @@
 
             <li class="active">
                 <a href="#personal">
-                    👤 Personal Info
+                    👤 Personal Information
                 </a>
             </li>
 
@@ -40,12 +42,6 @@
             </li>
 
             <li>
-                <a href="#statistics">
-                    📈 Statistics
-                </a>
-            </li>
-
-            <li>
                 <a href="#preferences">
                     ⚙ Preferences
                 </a>
@@ -55,159 +51,175 @@
 
     </aside>
 
+    <!-- =========================
+         PROFILE CONTENT
+    ========================== -->
+
     <main class="profile-content">
 
-        <div class="profile-header">
+        <!-- FORM START -->
 
-            <div>
+        <form method="POST">
 
-                <h1>My Profile</h1>
+            <!-- Header -->
 
-                <p>
+            <div class="profile-header">
 
-                    Manage your StockFlow account.
+                <div>
 
+                    <h1>My Profile</h1>
+
+                    <p>
+                        Manage your StockFlow account.
+                    </p>
+
+                </div>
+
+                <a href="/dashboard" class="back-btn">
+
+                    ⬅ Dashboard
+
+                </a>
+
+            </div>
+
+            <!-- =========================
+                 PERSONAL INFORMATION
+            ========================== -->
+
+            <div class="profile-card" id="personal">
+
+                <h2>👤 Personal Information</h2>
+
+                <div class="profile-grid">
+
+                    <div>
+
+                        <label>Full Name</label>
+
+                        <input type="text" name="full_name" value="{{ user[3] }}" required>
+
+                    </div>
+
+                    <div>
+
+                        <label>Username</label>
+
+                        <input type="text" name="username" value="{{ user[1] }}" readonly>
+
+                    </div>
+
+                    <div>
+
+                        <label>Email Address</label>
+
+                        <input type="email" name="email" value="{{ user[4] }}" required>
+
+                    </div>
+
+                    <div>
+
+                        <label>Phone Number</label>
+
+                        <input type="text" name="phone" value="{{ user[5] }}">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =========================
+                 SECURITY
+            ========================== -->
+
+            <div class="profile-card" id="security">
+
+                <h2>🔒 Account Security</h2>
+
+                <p class="section-description">
+                    Manage your account security settings.
                 </p>
 
-            </div>
+                <div class="profile-button-group">
 
-            <a href="/dashboard" class="back-btn">
+                    <a href="/change-password" class="profile-btn">
+                        🔑 Change Password
+                    </a>
 
-                ⬅ Dashboard
+                    <a href="/upload-profile-picture" class="profile-btn">
+                        📷 Upload Profile Picture
+                    </a>
 
-            </a>
+                    <button type="button" class="profile-btn" disabled>
 
-        </div>
+                        🔐 Two-Factor Authentication
+                        <small>(Coming Soon)</small>
 
-        <!-- Personal Information -->
-
-        <div class="profile-card" id="personal">
-
-            <h2>👤 Personal Information</h2>
-
-            <div class="profile-grid">
-
-                <div>
-
-                    <label>Full Name</label>
-
-                    <input type="text" value="Administrator">
-
-                </div>
-
-                <div>
-
-                    <label>Username</label>
-
-                    <input type="text" value="{{ session['user'] }}" readonly>
-
-                </div>
-
-                <div>
-
-                    <label>Email</label>
-
-                    <input type="email" value="admin@stockflow.com">
-
-                </div>
-
-                <div>
-
-                    <label>Phone</label>
-
-                    <input type="text" placeholder="+254...">
+                    </button>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- =========================
+                 RECENT ACTIVITY
+            ========================== -->
 
-        <!-- Security -->
+            <div class="profile-card" id="activity">
 
-        <div class="profile-card" id="security">
+                <h2>📊 Recent Activity</h2>
 
-            <h2>🔒 Account Security</h2>
+                <div class="activity-list">
 
-            <button class="profile-btn">
+                    <div class="activity-item">
 
-                🔑 Change Password
+                        <span>🟢</span>
 
-            </button>
+                        <div>
 
-            <button class="profile-btn">
+                            <h4>Logged into StockFlow</h4>
 
-                📷 Upload Profile Picture
+                            <small>
+                                Last Login:
+                                {{ user[8] if user[8] else "Not Available" }}
+                            </small>
 
-            </button>
-
-            <button class="profile-btn">
-
-                🔐 Enable Two-Factor Authentication
-
-            </button>
-
-        </div>
-
-        <!-- Activity -->
-
-        <div class="profile-card" id="activity">
-
-            <h2>📊 Recent Activity</h2>
-
-            <div class="activity-list">
-
-                <div class="activity-item">
-
-                    <span>🟢</span>
-
-                    <div>
-
-                        <h4>Logged into StockFlow</h4>
-
-                        <small>Today - 09:35 AM</small>
+                        </div>
 
                     </div>
 
-                </div>
+                    <div class="activity-item">
 
-                <div class="activity-item">
+                        <span>👤</span>
 
-                    <span>📦</span>
+                        <div>
 
-                    <div>
+                            <h4>Profile Loaded Successfully</h4>
 
-                        <h4>Added New Product</h4>
+                            <small>
+                                You are currently signed in.
+                            </small>
 
-                        <small>Yesterday</small>
-
-                    </div>
-
-                </div>
-
-                <div class="activity-item">
-
-                    <span>💰</span>
-
-                    <div>
-
-                        <h4>Recorded New Sale</h4>
-
-                        <small>Yesterday</small>
+                        </div>
 
                     </div>
 
-                </div>
+                    <div class="activity-item">
 
-                <div class="activity-item">
+                        <span>📅</span>
 
-                    <span>🛒</span>
+                        <div>
 
-                    <div>
+                            <h4>Account Created</h4>
 
-                        <h4>Added Purchase</h4>
+                            <small>
 
-                        <small>2 Days Ago</small>
+                                {{ user[9] if user[9] else "Unknown" }}
+
+                            </small>
+
+                        </div>
 
                     </div>
 
@@ -215,135 +227,79 @@
 
             </div>
 
-        </div>
+            <!-- =========================
+                 PREFERENCES
+            ========================== -->
 
-        <!-- Statistics -->
+            <div class="profile-card" id="preferences">
 
-        <div class="profile-card" id="statistics">
+                <h2>⚙ Account Preferences</h2>
 
-            <h2>📈 Account Statistics</h2>
+                <div class="checkbox-group">
 
-            <div class="stats-grid">
+                    <label>
 
-                <div class="stat-box">
+                        <input type="checkbox" checked>
 
-                    <h3>Today's Sales</h3>
+                        Receive Email Notifications
 
-                    <p>KES {{ "%.0f"|format(today_sales) }}</p>
+                    </label>
 
-                </div>
+                    <label>
 
-                <div class="stat-box">
+                        <input type="checkbox" checked>
 
-                    <h3>Total Revenue</h3>
+                        Enable Dashboard Tips
 
-                    <p>KES {{ "%.0f"|format(total_revenue) }}</p>
+                    </label>
 
-                </div>
+                    <label>
 
-                <div class="stat-box">
+                        <input type="checkbox">
 
-                    <h3>Products</h3>
+                        Enable Dark Mode
 
-                    <p>{{ total_products }}</p>
+                    </label>
 
-                </div>
+                    <label>
 
-                <div class="stat-box">
+                        <input type="checkbox">
 
-                    <h3>Orders</h3>
+                        Enable Two-Factor Authentication
 
-                    <p>{{ total_orders }}</p>
-
-                </div>
-
-                <div class="stat-box">
-
-                    <h3>Low Stock</h3>
-
-                    <p>{{ low_stock }}</p>
-
-                </div>
-
-                <div class="stat-box">
-
-                    <h3>Status</h3>
-
-                    <p style="color:green;">🟢 Online</p>
+                    </label>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- =========================
+                 ACTION BUTTONS
+            ========================== -->
 
-        <!-- Preferences -->
+            <div class="profile-actions">
 
-        <div class="profile-card" id="preferences">
+                <button type="submit" class="save-btn">
 
-            <h2>⚙ Account Preferences</h2>
+                    💾 Save Changes
 
-            <div class="checkbox-group">
+                </button>
 
-                <label>
+                <a href="/settings" class="secondary-btn">
 
-                    <input type="checkbox" checked>
+                    ⚙ Settings
 
-                    Receive Email Notifications
+                </a>
 
-                </label>
+                <a href="/dashboard" class="back-btn">
 
-                <label>
+                    ⬅ Dashboard
 
-                    <input type="checkbox" checked>
-
-                    Enable Dark Mode
-
-                </label>
-
-                <label>
-
-                    <input type="checkbox">
-
-                    Enable Two-Factor Authentication
-
-                </label>
-
-                <label>
-
-                    <input type="checkbox" checked>
-
-                    Show Dashboard Tips
-
-                </label>
+                </a>
 
             </div>
 
-        </div>
-
-        <!-- Save -->
-
-        <div class="profile-actions">
-
-            <button class="save-btn">
-
-                💾 Save Changes
-
-            </button>
-
-            <a href="/settings" class="secondary-btn">
-
-                ⚙ Settings
-
-            </a>
-
-            <a href="/dashboard" class="back-btn">
-
-                ⬅ Dashboard
-
-            </a>
-
-        </div>
+        </form>
 
     </main>
 

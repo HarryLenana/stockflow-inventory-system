@@ -757,59 +757,34 @@ select {
 
 }
 
-.page-container {
-    padding: 30px;
-}
+.flash-message {
 
-.page-header {
-    margin-bottom: 30px;
-}
+    padding: 15px;
 
-.profile-card {
-    max-width: 600px;
-    background: #1d2433;
-    border-radius: 15px;
-    padding: 30px;
-    color: white;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
-}
-
-.profile-avatar {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: #4f8cff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
-    margin: auto;
     margin-bottom: 20px;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
 }
 
-.profile-card h2 {
-    text-align: center;
-    margin-bottom: 25px;
+.flash-message.success {
+
+    background: #d1fae5;
+
+    color: #065f46;
+
+    border-left: 5px solid #10b981;
+
 }
 
-.profile-table {
-    width: 100%;
-}
+.flash-message.danger {
 
-.profile-table td {
-    padding: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, .1);
-}
+    background: #fee2e2;
 
-.btn-primary {
-    display: inline-block;
-    background: #4f8cff;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-}
+    color: #991b1b;
 
-.btn-primary:hover {
-    background: #3c75db;
+    border-left: 5px solid #ef4444;
+
 }

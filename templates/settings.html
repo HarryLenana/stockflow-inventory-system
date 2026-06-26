@@ -76,6 +76,22 @@
 
         <div class="settings-header">
 
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+            {% for category, message in messages %}
+
+            <div class="flash-message {{ category }}">
+
+                {{ message }}
+
+            </div>
+
+            {% endfor %}
+
+            {% endif %}
+            {% endwith %}
+
             <div>
 
                 <h1>System Settings</h1>
@@ -210,461 +226,478 @@
 
                             New Password
 
-                        </label>
+                            <div>
 
-                        <input type="password" placeholder="Leave blank to keep current password">
+                                <label>
 
+                                    Current Password
+
+                                </label>
+
+                                <input type="password" name="current_password" placeholder="Current Password">
+
+                            </div>
+
+                            <div>
+
+                                <label>
+
+                                    New Password
+
+                                </label>
+
+                                <input type="password" name="new_password" placeholder="New Password">
+
+                            </div>
+
+                            <div>
+
+                                <label>
+
+                                    Confirm Password
+
+                                </label>
+
+                                <input type="password" name="confirm_password" placeholder="Confirm Password">
+
+                            </div>
                     </div>
 
-                    <div>
+                    <div style="margin-top:20px;">
 
-                        <label>
+                        <button type="button" class="secondary-btn">
 
-                            Confirm Password
+                            📷 Change Profile Picture
 
-                        </label>
-
-                        <input type="password" placeholder="Confirm password">
-
-                    </div>
-
-                </div>
-
-                <div style="margin-top:20px;">
-
-                    <button type="button" class="secondary-btn">
-
-                        📷 Change Profile Picture
-
-                    </button>
-
-                </div>
-
-            </div>
-
-            <!-- SAVE BUTTON -->
-
-            <div class="settings-actions">
-
-                <button class="save-btn" type="submit">
-
-                    💾 Save Settings
-
-                </button>
-
-                <button class="reset-btn" type="reset">
-
-                    🔄 Reset
-
-                </button>
-
-            </div>
-
-            <!-- INVENTORY SETTINGS -->
-
-            <div class="settings-card" id="inventory">
-
-                <h2>📦 Inventory Settings</h2>
-
-                <div class="form-grid">
-
-                    <div>
-
-                        <label>Currency</label>
-
-                        <select name="currency">
-
-                            <option value="KES" {% if settings[6]=="KES" %}selected{% endif %}>
-                                Kenyan Shilling (KES)
-                            </option>
-
-                            <option value="USD" {% if settings[6]=="USD" %}selected{% endif %}>
-                                US Dollar (USD)
-                            </option>
-
-                            <option value="EUR" {% if settings[6]=="EUR" %}selected{% endif %}>
-                                Euro (EUR)
-                            </option>
-
-                            <option value="GBP" {% if settings[6]=="GBP" %}selected{% endif %}>
-                                British Pound (GBP)
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <div>
-
-                        <label>Tax Rate (%)</label>
-
-                        <input type="number" step="0.01" name="tax_rate" value="{{ settings[7] }}">
-
-                    </div>
-
-                    <div>
-
-                        <label>Low Stock Alert Level</label>
-
-                        <input type="number" name="low_stock" value="{{ settings[8] }}">
-
-                    </div>
-
-                    <div>
-
-                        <label>Default Language</label>
-
-                        <select>
-
-                            <option selected>
-                                English
-                            </option>
-
-                            <option>
-                                Kiswahili
-                            </option>
-
-                        </select>
+                        </button>
 
                     </div>
 
                 </div>
 
-            </div>
-
-            <!-- NOTIFICATIONS -->
-
-            <div class="settings-card" id="notifications">
-
-                <h2>🔔 Notification Settings</h2>
-
-                <div class="checkbox-group">
-
-                    <label>
-
-                        <input type="checkbox" name="email_alerts" {% if settings[10] %}checked{% endif %}>
-
-                        Enable Email Alerts
-
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" name="sales_alerts" {% if settings[11] %}checked{% endif %}>
-
-                        Notify on New Sales
-
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" name="purchase_alerts" {% if settings[12] %}checked{% endif %}>
-
-                        Notify on Purchases
-
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" name="stock_alerts" {% if settings[13] %}checked{% endif %}>
-
-                        Notify on Low Stock
-
-                    </label>
-
-                </div>
-
-            </div>
-
-            <!-- APPEARANCE -->
-
-            <div class="settings-card" id="appearance">
-
-                <h2>🎨 Appearance</h2>
-
-                <div class="form-grid">
-
-                    <div>
-
-                        <label>
-
-                            Theme
-
-                        </label>
-
-                        <select name="theme">
-
-                            <option>
-
-                                Light
-
-                            </option>
-
-                            <option>
-
-                                Dark
-
-                            </option>
-
-                            <option>
-
-                                Auto
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <div>
-
-                        <label>
-
-                            Dashboard Style
-
-                        </label>
-
-                        <select>
-
-                            <option>
-
-                                Modern
-
-                            </option>
-
-                            <option>
-
-                                Classic
-
-                            </option>
-
-                            <option>
-
-                                Compact
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-                <div class="checkbox-group">
-
-                    <label>
-
-                        <input type="checkbox" name="dark_mode" {% if settings[9] %}checked{% endif %}>
-
-                        Enable Dark Mode
-
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" checked>
-
-                        Enable Animations
-
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" checked>
-
-                        Enable Dashboard Tips
-
-                    </label>
-
-                </div>
-
-            </div>
-
-            <!-- SECURITY -->
-
-            <div class="settings-card" id="security">
-
-                <h2>🔐 Security</h2>
-
-                <div class="checkbox-group">
-
-                    <label>
-                        <input type="checkbox" checked>
-                        Enable Two-Factor Authentication
-                    </label>
-
-                    <label>
-                        <input type="checkbox" checked>
-                        Require Password on Login
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        Remember This Device
-                    </label>
-
-                    <label>
-                        <input type="checkbox" checked>
-                        Automatic Logout After 30 Minutes
-                    </label>
-
-                </div>
-
-            </div>
-
-            <!-- DATABASE -->
-
-            <div class="settings-card" id="database">
-
-                <h2>💾 Database</h2>
-
-                <p>
-
-                    Manage backups of your StockFlow database.
-
-                </p>
+                <!-- SAVE BUTTON -->
 
                 <div class="settings-actions">
 
-                    <button type="button" class="secondary-btn">
+                    <button class="save-btn" type="submit">
 
-                        📥 Backup Database
+                        💾 Save Settings
 
                     </button>
 
-                    <button type="button" class="secondary-btn">
+                    <button class="reset-btn" type="reset">
 
-                        📤 Restore Backup
+                        🔄 Reset
 
                     </button>
 
                 </div>
 
-            </div>
+                <!-- INVENTORY SETTINGS -->
 
-            <!-- EXPORT -->
+                <div class="settings-card" id="inventory">
 
-            <div class="settings-card" id="export">
+                    <h2>📦 Inventory Settings</h2>
 
-                <h2>📤 Export Center</h2>
+                    <div class="form-grid">
 
-                <p>
+                        <div>
 
-                    Export reports and inventory data.
+                            <label>Currency</label>
 
-                </p>
+                            <select name="currency">
+
+                                <option value="KES" {% if settings[6]=="KES" %}selected{% endif %}>
+                                    Kenyan Shilling (KES)
+                                </option>
+
+                                <option value="USD" {% if settings[6]=="USD" %}selected{% endif %}>
+                                    US Dollar (USD)
+                                </option>
+
+                                <option value="EUR" {% if settings[6]=="EUR" %}selected{% endif %}>
+                                    Euro (EUR)
+                                </option>
+
+                                <option value="GBP" {% if settings[6]=="GBP" %}selected{% endif %}>
+                                    British Pound (GBP)
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            <label>Tax Rate (%)</label>
+
+                            <input type="number" step="0.01" name="tax_rate" value="{{ settings[7] }}">
+
+                        </div>
+
+                        <div>
+
+                            <label>Low Stock Alert Level</label>
+
+                            <input type="number" name="low_stock" value="{{ settings[8] }}">
+
+                        </div>
+
+                        <div>
+
+                            <label>Default Language</label>
+
+                            <select>
+
+                                <option selected>
+                                    English
+                                </option>
+
+                                <option>
+                                    Kiswahili
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- NOTIFICATIONS -->
+
+                <div class="settings-card" id="notifications">
+
+                    <h2>🔔 Notification Settings</h2>
+
+                    <div class="checkbox-group">
+
+                        <label>
+
+                            <input type="checkbox" name="email_alerts" {% if settings[10] %}checked{% endif %}>
+
+                            Enable Email Alerts
+
+                        </label>
+
+                        <label>
+
+                            <input type="checkbox" name="sales_alerts" {% if settings[11] %}checked{% endif %}>
+
+                            Notify on New Sales
+
+                        </label>
+
+                        <label>
+
+                            <input type="checkbox" name="purchase_alerts" {% if settings[12] %}checked{% endif %}>
+
+                            Notify on Purchases
+
+                        </label>
+
+                        <label>
+
+                            <input type="checkbox" name="stock_alerts" {% if settings[13] %}checked{% endif %}>
+
+                            Notify on Low Stock
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- APPEARANCE -->
+
+                <div class="settings-card" id="appearance">
+
+                    <h2>🎨 Appearance</h2>
+
+                    <div class="form-grid">
+
+                        <div>
+
+                            <label>
+
+                                Theme
+
+                            </label>
+
+                            <select name="theme">
+
+                                <option>
+
+                                    Light
+
+                                </option>
+
+                                <option>
+
+                                    Dark
+
+                                </option>
+
+                                <option>
+
+                                    Auto
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            <label>
+
+                                Dashboard Style
+
+                            </label>
+
+                            <select>
+
+                                <option>
+
+                                    Modern
+
+                                </option>
+
+                                <option>
+
+                                    Classic
+
+                                </option>
+
+                                <option>
+
+                                    Compact
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="checkbox-group">
+
+                        <label>
+
+                            <input type="checkbox" name="dark_mode" {% if settings[9] %}checked{% endif %}>
+
+                            Enable Dark Mode
+
+                        </label>
+
+                        <label>
+
+                            <input type="checkbox" checked>
+
+                            Enable Animations
+
+                        </label>
+
+                        <label>
+
+                            <input type="checkbox" checked>
+
+                            Enable Dashboard Tips
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- SECURITY -->
+
+                <div class="settings-card" id="security">
+
+                    <h2>🔐 Security</h2>
+
+                    <div class="checkbox-group">
+
+                        <label>
+                            <input type="checkbox" checked>
+                            Enable Two-Factor Authentication
+                        </label>
+
+                        <label>
+                            <input type="checkbox" checked>
+                            Require Password on Login
+                        </label>
+
+                        <label>
+                            <input type="checkbox">
+                            Remember This Device
+                        </label>
+
+                        <label>
+                            <input type="checkbox" checked>
+                            Automatic Logout After 30 Minutes
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- DATABASE -->
+
+                <div class="settings-card" id="database">
+
+                    <h2>💾 Database</h2>
+
+                    <p>
+
+                        Manage backups of your StockFlow database.
+
+                    </p>
+
+                    <div class="settings-actions">
+
+                        <button type="button" class="secondary-btn">
+
+                            📥 Backup Database
+
+                        </button>
+
+                        <button type="button" class="secondary-btn">
+
+                            📤 Restore Backup
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- EXPORT -->
+
+                <div class="settings-card" id="export">
+
+                    <h2>📤 Export Center</h2>
+
+                    <p>
+
+                        Export reports and inventory data.
+
+                    </p>
+
+                    <div class="settings-actions">
+
+                        <button type="button" class="secondary-btn">
+
+                            📄 Export PDF
+
+                        </button>
+
+                        <button type="button" class="secondary-btn">
+
+                            📊 Export Excel
+
+                        </button>
+
+                        <button type="button" class="secondary-btn">
+
+                            📑 Export CSV
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- SYSTEM -->
+
+                <div class="settings-card" id="system">
+
+                    <h2>ℹ️ System Information</h2>
+
+                    <table class="system-table">
+
+                        <tr>
+
+                            <td>Application</td>
+
+                            <td>StockFlow Inventory Suite</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Version</td>
+
+                            <td>2.0</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Database</td>
+
+                            <td>SQLite</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Framework</td>
+
+                            <td>Flask</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Python</td>
+
+                            <td>3.x</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>Status</td>
+
+                            <td style="color:green;">
+
+                                🟢 Running
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <!-- FOOTER BUTTONS -->
 
                 <div class="settings-actions">
 
-                    <button type="button" class="secondary-btn">
+                    <button type="submit" class="save-btn">
 
-                        📄 Export PDF
-
-                    </button>
-
-                    <button type="button" class="secondary-btn">
-
-                        📊 Export Excel
+                        💾 Save All Settings
 
                     </button>
 
-                    <button type="button" class="secondary-btn">
+                    <button type="reset" class="reset-btn">
 
-                        📑 Export CSV
+                        🔄 Reset
 
                     </button>
+
+                    <a href="/dashboard" class="back-btn">
+
+                        ⬅ Back to Dashboard
+
+                    </a>
 
                 </div>
-
-            </div>
-
-            <!-- SYSTEM -->
-
-            <div class="settings-card" id="system">
-
-                <h2>ℹ️ System Information</h2>
-
-                <table class="system-table">
-
-                    <tr>
-
-                        <td>Application</td>
-
-                        <td>StockFlow Inventory Suite</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Version</td>
-
-                        <td>2.0</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Database</td>
-
-                        <td>SQLite</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Framework</td>
-
-                        <td>Flask</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Python</td>
-
-                        <td>3.x</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Status</td>
-
-                        <td style="color:green;">
-
-                            🟢 Running
-
-                        </td>
-
-                    </tr>
-
-                </table>
-
-            </div>
-
-            <!-- FOOTER BUTTONS -->
-
-            <div class="settings-actions">
-
-                <button type="submit" class="save-btn">
-
-                    💾 Save All Settings
-
-                </button>
-
-                <button type="reset" class="reset-btn">
-
-                    🔄 Reset
-
-                </button>
-
-                <a href="/dashboard" class="back-btn">
-
-                    ⬅ Back to Dashboard
-
-                </a>
-
-            </div>
 
         </form>
 
