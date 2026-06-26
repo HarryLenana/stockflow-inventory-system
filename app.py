@@ -1,3 +1,11 @@
+import os
+import shutil
+import sqlite3
+import platform
+import flask
+from datetime import datetime
+from flask import send_file
+
 import csv
 from flask import Response
 from flask import Flask
@@ -9,6 +17,94 @@ from flask import session
 import sqlite3
 
 from database.models import create_tables
+
+
+def create_settings_table():
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS settings(
+
+        id INTEGER PRIMARY KEY,
+
+        company_name TEXT,
+
+        company_email TEXT,
+
+        company_phone TEXT,
+
+        company_address TEXT,
+
+        company_website TEXT,
+
+        currency TEXT,
+
+        tax_rate REAL,
+
+        low_stock INTEGER,
+
+        dark_mode INTEGER,
+
+        email_alerts INTEGER,
+
+        sales_alerts INTEGER,
+
+        purchase_alerts INTEGER,
+
+        stock_alerts INTEGER
+
+    )
+    """)
+
+    cursor.execute("SELECT COUNT(*) FROM settings")
+
+    if cursor.fetchone()[0] == 0:
+
+        cursor.execute("""
+        INSERT INTO settings(
+
+            company_name,
+            company_email,
+            company_phone,
+            company_address,
+            company_website,
+            currency,
+            tax_rate,
+            low_stock,
+            dark_mode,
+            email_alerts,
+            sales_alerts,
+            purchase_alerts,
+            stock_alerts
+
+        )
+
+        VALUES(
+
+            'StockFlow Ltd',
+            '',
+            '',
+            '',
+            '',
+            'KES',
+            16,
+            10,
+            0,
+            1,
+            1,
+            1,
+            1
+
+        )
+        """)
+
+    conn.commit()
+    conn.close()
+
+
+create_settings_table()
 
 app = Flask(__name__)
 app.secret_key = "stockflow_secret_key"
@@ -231,6 +327,225 @@ def dashboard():
         total_orders=total_orders,
         today_orders=today_orders,
         top_product=top_product,
+    )
+
+
+@app.route("/settings", methods=["GET", "POST"])
+def settings():
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        cursor.execute("""
+
+        UPDATE settings
+
+        SET
+
+        company_name=?,
+        company_email=?,
+        company_phone=?,
+        company_address=?,
+        company_website=?,
+        currency=?,
+        tax_rate=?,
+        low_stock=?,
+        dark_mode=?,
+        email_alerts=?,
+        sales_alerts=?,
+        purchase_alerts=?,
+        stock_alerts=?
+
+        WHERE id=1
+
+        """, (
+
+            request.form["company_name"],
+            request.form["company_email"],
+            request.form["company_phone"],
+            request.form["company_address"],
+            request.form["company_website"],
+            request.form["currency"],
+            request.form["tax_rate"],
+            request.form["low_stock"],
+
+            1 if request.form.get("dark_mode") else 0,
+            1 if request.form.get("email_alerts") else 0,
+            1 if request.form.get("sales_alerts") else 0,
+            1 if request.form.get("purchase_alerts") else 0,
+            1 if request.form.get("stock_alerts") else 0
+
+        ))
+
+        conn.commit()
+
+    cursor.execute("SELECT * FROM settings")
+
+    settings = cursor.fetchone()
+
+    system_info = {
+
+        "python": platform.python_version(),
+
+        "flask": flask.__version__,
+
+        "database": "SQLite",
+
+        "os": platform.system(),
+
+        "time": datetime.now().strftime("%d %B %Y %H:%M")
+
+    }
+
+    conn.close()
+
+    return render_template(
+
+        "settings.html",
+
+        settings=settings,
+
+        system_info=system_info
+
+    )
+
+
+@app.route("/backup")
+def backup_database():
+
+    if "user" not in session:
+        return redirect("/")
+
+    backup_folder = "backups"
+
+    os.makedirs(backup_folder, exist_ok=True)
+
+    filename = datetime.now().strftime(
+        "backup_%Y%m%d_%H%M%S.db"
+    )
+
+    destination = os.path.join(
+        backup_folder,
+        filename
+    )
+
+    shutil.copy(
+        "database.db",
+        destination
+    )
+
+    return send_file(
+        destination,
+        as_attachment=True
+    )
+
+
+@app.route("/restore")
+def restore_database():
+
+    if "user" not in session:
+        return redirect("/")
+
+    return """
+    <h2>
+    Restore Database Feature Coming Soon
+    </h2>
+
+    <a href="/settings">
+    Back
+    </a>
+    """
+
+
+@app.route("/system-info")
+def system_info():
+
+    if "user" not in session:
+        return redirect("/")
+
+    return {
+
+        "Python": platform.python_version(),
+
+        "Flask": flask.__version__,
+
+        "Database": "SQLite",
+
+        "Operating System": platform.system()
+
+    }
+
+
+@app.route("/profile")
+def profile():
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    from datetime import date
+
+    today = date.today().strftime("%Y-%m-%d")
+
+    # Today's Revenue
+    cursor.execute("""
+        SELECT IFNULL(
+            SUM(quantity * selling_price),
+            0
+        )
+        FROM sales
+        WHERE sale_date = ?
+    """, (today,))
+    today_sales = cursor.fetchone()[0]
+
+    # Total Revenue
+    cursor.execute("""
+        SELECT IFNULL(
+            SUM(quantity * selling_price),
+            0
+        )
+        FROM sales
+    """)
+    total_revenue = cursor.fetchone()[0]
+
+    # Total Products
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM products
+    """)
+    total_products = cursor.fetchone()[0]
+
+    # Total Orders
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM sales
+    """)
+    total_orders = cursor.fetchone()[0]
+
+    # Low Stock
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM products
+        WHERE stock < 10
+    """)
+    low_stock = cursor.fetchone()[0]
+
+    conn.close()
+
+    return render_template(
+        "profile.html",
+        today_sales=today_sales,
+        total_revenue=total_revenue,
+        total_products=total_products,
+        total_orders=total_orders,
+        low_stock=low_stock
     )
 
 

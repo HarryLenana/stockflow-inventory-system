@@ -756,3 +756,60 @@ select {
     border-top: 1px solid rgba(255, 255, 255, .1);
 
 }
+
+.page-container {
+    padding: 30px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.profile-card {
+    max-width: 600px;
+    background: #1d2433;
+    border-radius: 15px;
+    padding: 30px;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #4f8cff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.profile-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-table {
+    width: 100%;
+}
+
+.profile-table td {
+    padding: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+
+.btn-primary {
+    display: inline-block;
+    background: #4f8cff;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background: #3c75db;
+}
