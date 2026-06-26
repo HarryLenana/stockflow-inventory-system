@@ -1,6 +1,9 @@
 import os
 from werkzeug.utils import secure_filename
 
+import os
+from werkzeug.utils import secure_filename
+
 from flask import flash
 
 from datetime import datetime
@@ -120,6 +123,12 @@ UPLOAD_FOLDER = "static/uploads/users"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+
+UPLOAD_FOLDER = "static/uploads/users"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+# Create the folder if it doesn't exist
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 create_tables()
 
@@ -351,136 +360,112 @@ def settings():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
+    # Load current user
+    cursor.execute("""
+        SELECT *
+        FROM users
+        WHERE username=?
+    """, (session["user"],))
+    user = cursor.fetchone()
+
+    # Load system settings
+    cursor.execute("SELECT * FROM settings LIMIT 1")
+    settings = cursor.fetchone()
+
     if request.method == "POST":
 
         # ==========================
-        # SAVE SETTINGS
+        # Upload Profile Picture
         # ==========================
 
-        cursor.execute("""
-            UPDATE settings
-            SET
-                company_name=?,
-                company_email=?,
-                company_phone=?,
-                company_address=?,
-                company_website=?,
-                currency=?,
-                tax_rate=?,
-                low_stock=?,
-                dark_mode=?,
-                email_alerts=?,
-                sales_alerts=?,
-                purchase_alerts=?,
-                stock_alerts=?
-            WHERE id=1
-        """, (
+        if "profile_picture" in request.files:
 
-            request.form["company_name"],
-            request.form["company_email"],
-            request.form["company_phone"],
-            request.form["company_address"],
-            request.form["company_website"],
-            request.form["currency"],
-            request.form["tax_rate"],
-            request.form["low_stock"],
+            file = request.files["profile_picture"]
 
-            1 if request.form.get("dark_mode") else 0,
-            1 if request.form.get("email_alerts") else 0,
-            1 if request.form.get("sales_alerts") else 0,
-            1 if request.form.get("purchase_alerts") else 0,
-            1 if request.form.get("stock_alerts") else 0
+            if file.filename != "":
 
-        ))
+                filename = secure_filename(file.filename)
 
-        conn.commit()
+                filepath = os.path.join(
+                    app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+
+                file.save(filepath)
+
+                cursor.execute("""
+                    UPDATE users
+                    SET profile_picture=?
+                    WHERE username=?
+                """, (
+                    filename,
+                    session["user"]
+                ))
+
+                conn.commit()
+
+                flash(
+                    "Profile picture updated successfully!",
+                    "success"
+                )
+
+                conn.close()
+                return redirect("/settings")
 
         # ==========================
-        # CHANGE PASSWORD
+        # Change Password
         # ==========================
 
         current_password = request.form.get("current_password")
         new_password = request.form.get("new_password")
         confirm_password = request.form.get("confirm_password")
 
-        if current_password and new_password and confirm_password:
+        if current_password:
 
-            cursor.execute("""
-                SELECT password
-                FROM users
-                WHERE username=?
-            """, (session["user"],))
+            if current_password != user[2]:
 
-            user = cursor.fetchone()
+                flash("Current password is incorrect.", "danger")
 
-            if user:
+            elif new_password != confirm_password:
 
-                if user[0] != current_password:
+                flash("Passwords do not match.", "danger")
 
-                    flash(
-                        "Current password is incorrect.",
-                        "danger"
-                    )
+            else:
 
-                elif new_password != confirm_password:
+                cursor.execute("""
+                    UPDATE users
+                    SET password=?
+                    WHERE username=?
+                """, (
+                    new_password,
+                    session["user"]
+                ))
 
-                    flash(
-                        "New passwords do not match.",
-                        "danger"
-                    )
+                conn.commit()
 
-                else:
+                flash("Password changed successfully.", "success")
 
-                    cursor.execute("""
-                        UPDATE users
-                        SET password=?
-                        WHERE username=?
-                    """, (
-                        new_password,
-                        session["user"]
-                    ))
+            conn.close()
+            return redirect("/settings")
 
-                    conn.commit()
+    # Reload updated user
+    cursor.execute("""
+        SELECT *
+        FROM users
+        WHERE username=?
+    """, (session["user"],))
+    user = cursor.fetchone()
 
-                    flash(
-                        "Password changed successfully!",
-                        "success"
-                    )
-
-        else:
-
-            flash(
-                "Settings saved successfully!",
-                "success"
-            )
-
-    # ==========================
-    # LOAD SETTINGS
-    # ==========================
-
-    cursor.execute("SELECT * FROM settings")
+    # Reload settings
+    cursor.execute("SELECT * FROM settings LIMIT 1")
     settings = cursor.fetchone()
-
-    system_info = {
-
-        "python": platform.python_version(),
-        "flask": flask.__version__,
-        "database": "SQLite",
-        "os": platform.system(),
-        "time": datetime.now().strftime("%d %B %Y %H:%M")
-
-    }
 
     conn.close()
 
     return render_template(
-
         "settings.html",
-
-        settings=settings,
-
-        system_info=system_info
-
+        user=user,
+        settings=settings
     )
 
 
@@ -601,6 +586,109 @@ def profile():
         "profile.html",
         user=user
     )
+
+
+@app.route("/change_password", methods=["GET", "POST"])
+def change_password():
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        current_password = request.form["current_password"]
+        new_password = request.form["new_password"]
+        confirm_password = request.form["confirm_password"]
+
+        cursor.execute(
+            "SELECT password FROM users WHERE username=?",
+            (session["user"],)
+        )
+
+        user = cursor.fetchone()
+
+        if user[0] != current_password:
+
+            flash("Current password is incorrect.", "danger")
+
+        elif new_password != confirm_password:
+
+            flash("New passwords do not match.", "danger")
+
+        else:
+
+            cursor.execute("""
+                UPDATE users
+                SET password=?
+                WHERE username=?
+            """, (
+                new_password,
+                session["user"]
+            ))
+
+            conn.commit()
+
+            flash("Password changed successfully!", "success")
+
+            conn.close()
+
+            return redirect("/profile")
+
+    conn.close()
+
+    return render_template("change_password.html")
+
+
+@app.route("/upload-profile-picture", methods=["GET", "POST"])
+def upload_profile_picture():
+
+    if "user" not in session:
+        return redirect("/")
+
+    if request.method == "POST":
+
+        if "profile_picture" not in request.files:
+            flash("No file selected.", "danger")
+            return redirect("/upload-profile-picture")
+
+        file = request.files["profile_picture"]
+
+        if file.filename == "":
+            flash("Please choose an image.", "danger")
+            return redirect("/upload-profile-picture")
+
+        filename = secure_filename(file.filename)
+
+        filepath = os.path.join(
+            app.config["UPLOAD_FOLDER"],
+            filename
+        )
+
+        file.save(filepath)
+
+        conn = sqlite3.connect("database.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            UPDATE users
+            SET profile_picture=?
+            WHERE username=?
+        """, (
+            filename,
+            session["user"]
+        ))
+
+        conn.commit()
+        conn.close()
+
+        flash("Profile picture updated successfully!", "success")
+
+        return redirect("/profile")
+
+    return render_template("upload-profile-picture.html")
 
 
 @app.route("/users")

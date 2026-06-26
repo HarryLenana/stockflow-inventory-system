@@ -110,7 +110,7 @@
 
         </div>
 
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
 
             <!-- COMPANY -->
 
@@ -263,15 +263,22 @@
                             </div>
                     </div>
 
-                    <div style="margin-top:20px;">
+                    <div class="settings-avatar">
 
-                        <button type="button" class="secondary-btn">
-
-                            📷 Change Profile Picture
-
-                        </button>
+                        {% if user[6] %}
+                        <img src="{{ url_for('static', filename='uploads/users/' + user[6]) }}">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/default-user.png') }}">
+                        {% endif %}
 
                     </div>
+
+                    <label for="profile_picture" class="profile-btn">
+                        📷 Change Profile Picture
+                    </label>
+
+                    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" style="display:none"
+                        onchange="this.form.submit()">
 
                 </div>
 

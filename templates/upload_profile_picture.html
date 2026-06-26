@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="add-user-wrapper">
+
+    <div class="page-header">
+        <div>
+            <h1>📷 Upload Profile Picture</h1>
+            <p>Select a new profile picture.</p>
+        </div>
+
+        <a href="/profile" class="back-btn">
+            ⬅ Back
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <label>Choose Image</label>
+
+            <input type="file" name="profile_picture" accept="image/*" required>
+
+            <br><br>
+
+            <button class="save-btn">
+                Upload Picture
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
