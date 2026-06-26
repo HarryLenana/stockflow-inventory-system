@@ -12,12 +12,21 @@
 
         <div class="profile-image">
 
+            {% if user[6] %}
+
+            <img class="profile-avatar" src="{{ url_for('static', filename='uploads/users/' + user[6]) }}"
+                alt="Profile Picture">
+
+            {% else %}
+
             <img class="profile-avatar" src="{{ url_for('static', filename='images/default-user.png') }}"
                 alt="Profile Picture">
 
+            {% endif %}
+
             <h2>{{ user[1] }}</h2>
 
-            <p>{{ user[6] }}</p>
+            <p>{{ user[7] }}</p>
 
         </div>
 

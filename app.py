@@ -1,4 +1,9 @@
+import os
+from werkzeug.utils import secure_filename
+
 from flask import flash
+
+from datetime import datetime
 
 import os
 import shutil
@@ -110,6 +115,11 @@ create_settings_table()
 
 app = Flask(__name__)
 app.secret_key = "stockflow_secret_key"
+
+UPLOAD_FOLDER = "static/uploads/users"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 create_tables()
 
@@ -593,8 +603,244 @@ def profile():
     )
 
 
+@app.route("/users")
+def users():
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            full_name,
+            username,
+            email,
+            phone,
+            role,
+            profile_picture,
+            created_at
+        FROM users
+        ORDER BY full_name
+    """)
+
+    users = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "users.html",
+        users=users
+    )
+
+
+@app.route("/delete_user/<int:user_id>")
+def delete_user(user_id):
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    # Prevent deleting the main admin account
+    if user_id == 1:
+        conn.close()
+        return redirect("/users")
+
+    cursor.execute(
+        "DELETE FROM users WHERE id=?",
+        (user_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/users")
+
+
+@app.route("/edit_user/<int:user_id>", methods=["GET", "POST"])
+def edit_user(user_id):
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    # Load current user
+    cursor.execute(
+        "SELECT * FROM users WHERE id=?",
+        (user_id,)
+    )
+
+    user = cursor.fetchone()
+
+    if request.method == "POST":
+
+        full_name = request.form["full_name"]
+        username = request.form["username"]
+        email = request.form["email"]
+        phone = request.form["phone"]
+        role = request.form["role"]
+
+        # Keep the old picture unless a new one is uploaded
+        filename = user[6]
+
+        picture = request.files.get("profile_picture")
+
+        if picture and picture.filename != "":
+
+            filename = secure_filename(picture.filename)
+
+            picture.save(
+                os.path.join(
+                    app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+            )
+
+        cursor.execute("""
+            UPDATE users
+            SET
+                full_name=?,
+                username=?,
+                email=?,
+                phone=?,
+                role=?,
+                profile_picture=?
+            WHERE id=?
+        """, (
+            full_name,
+            username,
+            email,
+            phone,
+            role,
+            filename,
+            user_id
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/users")
+
+    conn.close()
+
+    return render_template(
+        "edit_user.html",
+        user=user
+    )
+
+
+@app.route("/add_user", methods=["GET", "POST"])
+def add_user():
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        full_name = request.form["full_name"]
+        username = request.form["username"]
+        password = request.form["password"]
+        email = request.form["email"]
+        phone = request.form["phone"]
+        role = request.form["role"]
+
+        # Date the user was created
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Check if username already exists
+        cursor.execute(
+            "SELECT id FROM users WHERE username=?",
+            (username,)
+        )
+
+        existing = cursor.fetchone()
+
+        if existing:
+
+            flash(
+                "Username already exists.",
+                "danger"
+            )
+
+        else:
+
+            cursor.execute("""
+                INSERT INTO users
+                (
+                    username,
+                    password,
+                    full_name,
+                    email,
+                    phone,
+                    role,
+                    created_at
+                )
+                VALUES
+                (?, ?, ?, ?, ?, ?, ?)
+            """, (
+
+                username,
+                password,
+                full_name,
+                email,
+                phone,
+                role,
+                created_at
+
+            ))
+
+            conn.commit()
+
+            flash(
+                "User created successfully!",
+                "success"
+            )
+
+            conn.close()
+
+            return redirect("/users")
+
+    conn.close()
+
+    return render_template("add_user.html")
+
+
+@app.route("/products")
+def products():
+
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM products
+        ORDER BY name
+    """)
+
+    products = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "products.html",
+        products=products
+    )
+
+
 @app.route("/add-product", methods=["GET", "POST"])
-def add_product(id):
+def add_product():
 
     if request.method == "POST":
 

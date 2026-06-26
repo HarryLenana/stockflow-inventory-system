@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="users-wrapper">
+
+    <div class="users-header">
+
+        <div>
+
+            <h1>👥 User Management</h1>
+
+            <p>
+                Manage StockFlow users, roles and permissions.
+            </p>
+
+        </div>
+
+        <div class="users-actions">
+
+            <input type="text" id="searchUser" placeholder="🔍 Search users...">
+
+            <a href="/add_user" class="add-user-btn">
+                ➕ Add User
+            </a>
+
+            <a href="/dashboard" class="back-btn">
+                ⬅ Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="users-table">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Full Name</th>
+
+                    <th>Username</th>
+
+                    <th>Email</th>
+
+                    <th>Phone</th>
+
+                    <th>Role</th>
+
+                    <th>Joined</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="userTable">
+
+                {% for user in users %}
+
+                <tr>
+
+                    <td>{{ user[0] }}</td>
+
+                    <td class="user-info">
+
+                        {% if user[6] %}
+
+                        <img src="{{ url_for('static', filename='uploads/users/' + user[6]) }}" class="table-avatar"
+                            alt="Profile Picture">
+
+                        {% else %}
+
+                        <img src="{{ url_for('static', filename='images/default-user.png') }}" class="table-avatar"
+                            alt="Profile Picture">
+
+                        {% endif %}
+
+                        {{ user[1] }}
+
+                    </td>
+
+                    <td>{{ user[2] }}</td>
+
+                    <td>{{ user[3] }}</td>
+
+                    <td>{{ user[4] }}</td>
+
+                    <td>
+
+                        <span class="role-badge">
+
+                            {{ user[5] }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+                        {% if user[7] %}
+                        {{ user[7][:10] }}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+
+                    <td>
+
+                        <a href="/edit_user/{{ user[0] }}" class="edit-btn">
+
+                            ✏ Edit
+
+                        </a>
+
+                        <a href="/delete_user/{{ user[0] }}" class="delete-btn"
+                            onclick="return confirm('Are you sure you want to delete this user?');">
+
+                            🗑 Delete
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/users.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="add-user-wrapper">
+
+    <div class="page-header">
+
+        <div>
+            <h1>✏ Edit User</h1>
+            <p>Update StockFlow user information.</p>
+        </div>
+
+        <a href="/users" class="back-btn">
+            ⬅ Back to Users
+        </a>
+
+    </div>
+
+    <div class="form-card">
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>Full Name</label>
+
+                    <input type="text" name="full_name" value="{{ user[3] }}" required>
+
+                </div>
+
+                <div>
+
+                    <label>Username</label>
+
+                    <input type="text" name="username" value="{{ user[1] }}" required>
+
+                </div>
+
+                <div>
+
+                    <label>Email</label>
+
+                    <input type="email" name="email" value="{{ user[4] }}">
+
+                </div>
+
+                <div>
+
+                    <label>Phone</label>
+
+                    <input type="text" name="phone" value="{{ user[5] }}">
+
+                </div>
+
+                <div>
+
+                    <label>Profile Picture</label>
+
+                    <input type="file" name="profile_picture" accept="image/*">
+
+                </div>
+
+                <div>
+
+                    <label>User Role</label>
+
+                    <select name="role">
+
+                        <option value="Administrator" {% if user[7]=="Administrator" %}selected{% endif %}>
+                            Administrator
+                        </option>
+
+                        <option value="Manager" {% if user[7]=="Manager" %}selected{% endif %}>
+                            Manager
+                        </option>
+
+                        <option value="Cashier" {% if user[7]=="Cashier" %}selected{% endif %}>
+                            Cashier
+                        </option>
+
+                        <option value="Store Keeper" {% if user[7]=="Store Keeper" %}selected{% endif %}>
+                            Store Keeper
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="form-buttons">
+
+                <button type="submit" class="save-btn">
+                    💾 Save Changes
+                </button>
+
+                <a href="/users" class="secondary-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

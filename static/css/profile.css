@@ -3,13 +3,10 @@
 ===================================== */
 
 .profile-wrapper {
-
     display: flex;
-
+    align-items: flex-start;
     min-height: 100vh;
-
     background: #f4f7fb;
-
 }
 
 /* =====================================
@@ -17,96 +14,57 @@
 ===================================== */
 
 .profile-sidebar {
-
     width: 280px;
-
     background: #1e293b;
-
     color: white;
-
     padding: 30px;
-
-    position: sticky;
-
-    top: 0;
-
     height: 100vh;
-
+    position: sticky;
+    top: 0;
+    flex-shrink: 0;
 }
 
-/* ==============================
-   PROFILE IMAGE
-============================== */
+
 
 .profile-image {
 
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-    align-items: center;
-
-    justify-content: flex-start;
-
-    gap: 15px;
-
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 
 }
 
-.profile-image img {
+.profile-avatar {
 
-    width: 70px;
-
-    height: 70px;
-
-    max-width: 70px;
-
-    min-width: 70px;
-
-    max-height: 70px;
-
-    min-height: 70px;
+    width: 140px;
+    height: 140px;
 
     border-radius: 50%;
 
     object-fit: cover;
 
-    border: 3px solid #22c55e;
+    border: 4px solid #22c55e;
 
-    background: white;
+    background: #fff;
 
-    padding: 2px;
+    padding: 4px;
 
-    flex: none;
+    display: block;
 
     box-shadow:
-        0 0 8px #22c55e,
-        0 0 18px rgba(34, 197, 94, .5);
+        0 0 8px rgba(34, 197, 94, .7),
+        0 0 18px rgba(34, 197, 94, .5),
+        0 0 35px rgba(34, 197, 94, .3);
+
+    transition: .3s;
 
 }
 
-.profile-image h2 {
+.profile-avatar:hover {
 
-    margin: 0;
-
-    font-size: 22px;
-
-    color: white;
-
-}
-
-.profile-image p {
-
-    margin-top: 4px;
-
-    color: #cbd5e1;
-
-    font-size: 14px;
-
-}
-
-.profile-image img:hover {
-
-    transform: scale(1.08);
+    transform: scale(1.05);
 
     box-shadow:
         0 0 12px rgba(34, 197, 94, .9),
@@ -117,13 +75,14 @@
 
 .profile-image h2 {
 
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 5px;
 
-    font-size: 24px;
+    font-size: 22px;
 
-    font-weight: 700;
+    color: #fff;
 
-    color: white;
+    text-align: left;
 
 }
 
@@ -131,9 +90,9 @@
 
     color: #cbd5e1;
 
-    font-size: 15px;
+    text-align: left;
 
-    margin-top: 5px;
+    margin: 0;
 
 }
 
@@ -190,11 +149,8 @@
 ===================================== */
 
 .profile-content {
-
     flex: 1;
-
     padding: 40px;
-
 }
 
 .profile-header {
@@ -674,37 +630,5 @@
         text-align: center;
 
     }
-
-}
-
-/* FORCE PROFILE AVATAR SIZE */
-
-.profile-avatar {
-
-    width: 80px !important;
-
-    height: 80px !important;
-
-    min-width: 80px !important;
-
-    max-width: 80px !important;
-
-    min-height: 80px !important;
-
-    max-height: 80px !important;
-
-    border-radius: 50% !important;
-
-    object-fit: cover !important;
-
-    display: block;
-
-    margin: auto;
-
-    border: 3px solid #22c55e;
-
-    box-shadow:
-        0 0 8px #22c55e,
-        0 0 20px rgba(34, 197, 94, .6);
 
 }
