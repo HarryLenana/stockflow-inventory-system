@@ -2,34 +2,25 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-plus"></i> Add Supplier</h1>
 
-    <h1>➕ Add Supplier</h1>
     <a href="javascript:history.back()" class="back-btn">
-
-        ← Back
-
+        <i class="fas fa-arrow-left"></i> Back
     </a>
+
     <div class="table-card">
-
         <form method="POST">
-
             <input type="text" name="name" placeholder="Supplier Name" required>
-
             <input type="text" name="phone" placeholder="Phone Number" required>
-
             <input type="email" name="email" placeholder="Email Address" required>
-
             <input type="text" name="address" placeholder="Address" required>
 
-            <button class="btn-green">
-                Save Supplier
+            <button class="btn-green" type="submit">
+                <i class="fas fa-check"></i> Save Supplier
             </button>
-
         </form>
-
     </div>
-
 </div>
 
 {% endblock %}

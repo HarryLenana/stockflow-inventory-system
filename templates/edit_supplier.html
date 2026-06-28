@@ -2,34 +2,25 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-pen-to-square"></i> Edit Supplier</h1>
 
-    <h1>✏️ Edit Supplier</h1>
     <a href="javascript:history.back()" class="back-btn">
-
-        ← Back
-
+        <i class="fas fa-arrow-left"></i> Back
     </a>
+
     <div class="table-card">
-
         <form method="POST">
-
             <input type="text" name="name" value="{{ supplier[1] }}" required>
-
             <input type="text" name="phone" value="{{ supplier[2] }}" required>
-
             <input type="email" name="email" value="{{ supplier[3] }}" required>
-
             <input type="text" name="address" value="{{ supplier[4] }}" required>
 
-            <button class="btn-green">
-                Update Supplier
+            <button class="btn-green" type="submit">
+                <i class="fas fa-check"></i> Update Supplier
             </button>
-
         </form>
-
     </div>
-
 </div>
 
 {% endblock %}

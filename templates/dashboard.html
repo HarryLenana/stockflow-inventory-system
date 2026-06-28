@@ -3,213 +3,110 @@
 {% block content %}
 
 <div class="dashboard-wrapper">
-
-    <!-- Sidebar -->
-    <aside class="sidebar">
-
+    <aside class="sidebar" aria-label="Primary navigation">
         <div class="logo">
-
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="StockFlow Logo" class="logo-img">
-
             <h2>StockFlow</h2>
-
             <small>Inventory Suite</small>
-
         </div>
 
         <ul class="menu">
-
             <li class="active">
-                <a href="/dashboard">
-                    <i class="fas fa-chart-line"></i>
-                    Dashboard
-                </a>
+                <a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
             </li>
-
             <li>
-                <a href="/products">
-                    <i class="fas fa-box"></i>
-                    Products
-                </a>
+                <a href="/products"><i class="fas fa-box"></i> Products</a>
             </li>
-
             <li>
-                <a href="/suppliers">
-                    <i class="fas fa-truck"></i>
-                    Suppliers
-                </a>
+                <a href="/suppliers"><i class="fas fa-truck"></i> Suppliers</a>
             </li>
-
             <li>
-                <a href="/purchases">
-                    <i class="fas fa-cart-plus"></i>
-                    Purchases
-                </a>
+                <a href="/purchases"><i class="fas fa-cart-plus"></i> Purchases</a>
             </li>
-
             <li>
-                <a href="/sales">
-                    <i class="fas fa-money-bill-wave"></i>
-                    Sales
-                </a>
+                <a href="/sales"><i class="fas fa-cash-register"></i> Sales</a>
             </li>
-
             <li>
-                <a href="/reports">
-                    <i class="fas fa-chart-pie"></i>
-                    Reports
-                </a>
+                <a href="/reports"><i class="fas fa-chart-pie"></i> Reports</a>
             </li>
-
+            {% if session["role"] == "Administrator" %}
             <li>
-                {% if session["role"] == "Administrator" %}
-                <a href="/users">
-                    <i class="fas fa-user"></i>
-                    Users
-                </a>
-                {% endif %}
+                <a href="/users"><i class="fas fa-users"></i> Users</a>
             </li>
-
+            {% endif %}
         </ul>
 
         <div class="sidebar-footer">
-
             <div class="footer-card">
-
                 <h4>System Status</h4>
-
-                <p>🟢 Online</p>
-
+                <p><span class="role-badge">Online</span></p>
                 <hr>
-
                 <a href="/about" class="footer-link">
                     <i class="fas fa-circle-info"></i>
                     About StockFlow
                 </a>
-
-                <small class="version-text">
-                    Version 1.0
-                </small>
-
+                <small class="version-text">Version 1.0</small>
             </div>
-
         </div>
-
     </aside>
 
-    <!-- Main Content -->
-    <main class="main-content">
-
-        <!-- Topbar -->
+    <main class="main-content" id="mainContent">
         <div class="topbar">
-
             <div class="top-left">
-
                 <div class="menu-dropdown">
-
-                    <button class="menu-btn" id="menuBtn">
-                        ☰
+                    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open quick menu">
+                        <i class="fas fa-bars"></i>
                     </button>
 
                     <div class="menu-content" id="menuContent">
-
-                        <a href="/dashboard">
-                            🏠 Dashboard
-                        </a>
-
-                        <a href="/profile">
-                            👤 Profile
-                        </a>
-
-                        <a href="/settings">
-                            ⚙️ Settings
-                        </a>
-
-                        <a href="/about">
-                            ℹ️ About
-                        </a>
-
-                        <a href="#">
-                            🌙 Dark Mode
-                            <small>(Coming Soon)</small>
-                        </a>
-
+                        <a href="/dashboard"><i class="fas fa-house"></i> Dashboard</a>
+                        <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+                        <a href="/settings"><i class="fas fa-gear"></i> Settings</a>
+                        <a href="/about"><i class="fas fa-circle-info"></i> About</a>
+                        <a href="#"><i class="fas fa-moon"></i> Dark Mode <small>(Coming Soon)</small></a>
                         <hr>
-
-                        <a href="/logout">
-                            🚪 Logout
-                        </a>
-
+                        <a href="/logout"><i class="fas fa-right-from-bracket"></i> Logout</a>
                     </div>
-
                 </div>
 
                 <div>
-
-                    <h2>Inventory Dashboard</h2>
-
-                    <p class="welcome-text">
-                        Welcome back to StockFlow
-                    </p>
-
+                    <h1>Inventory Dashboard</h1>
+                    <p class="welcome-text">Welcome back to StockFlow</p>
                 </div>
-
             </div>
 
             <div class="top-right">
-
                 <div class="notification-wrapper">
-
-                    <button class="notification-btn">
-
-                        🔔
-
+                    <button class="notification-btn" type="button" aria-label="View stock alerts">
+                        <i class="fas fa-bell"></i>
                         {% if low_stock > 0 %}
-                        <span class="notification-count">
-                            {{ low_stock }}
-                        </span>
+                        <span class="notification-count">{{ low_stock }}</span>
                         {% endif %}
-
                     </button>
 
                     <div class="notification-dropdown">
-
                         <h4>Stock Alerts</h4>
-
                         {% if low_stock_products %}
-
                         {% for product in low_stock_products %}
-
                         <div class="alert-item">
-
-                            ⚠️ {{ product[0] }}
-
-                            <span>
-                                ({{ product[1] }} left)
-                            </span>
-
+                            <span>{{ product[0] }}</span>
+                            <span>{{ product[1] }} left</span>
                         </div>
-
                         {% endfor %}
-
                         {% else %}
-
-                        <p>✅ Inventory is healthy.</p>
-
+                        <p>Inventory is healthy.</p>
                         {% endif %}
-
                     </div>
-
                 </div>
 
                 <div class="user-menu">
-
-                    <button class="user-btn" id="userBtn">
-
+                    <button class="user-btn" id="userBtn" type="button" aria-label="Open user menu">
                         {% if user and user[6] %}
-                        <img src="{{ url_for('static', filename='uploads/users/' + user[6]) }}" class="nav-avatar">
+                        <img src="{{ url_for('static', filename='uploads/users/' + user[6]) }}" class="nav-avatar"
+                            alt="">
                         {% else %}
-                        <img src="{{ url_for('static', filename='images/default-user.png') }}" class="nav-avatar">
+                        <img src="{{ url_for('static', filename='images/default-user1.png') }}" class="nav-avatar"
+                            alt="">
                         {% endif %}
 
                         <div class="user-info">
@@ -218,249 +115,128 @@
                         </div>
 
                         <i class="fas fa-chevron-down"></i>
-
                     </button>
 
                     <div class="user-dropdown" id="userDropdown">
-
                         <div class="dropdown-header">
-
                             {% if user and user[6] %}
                             <img src="{{ url_for('static', filename='uploads/users/' + user[6]) }}"
-                                class="dropdown-avatar">
+                                class="dropdown-avatar" alt="">
                             {% else %}
-                            <img src="{{ url_for('static', filename='images/default-user.png') }}"
-                                class="dropdown-avatar">
+                            <img src="{{ url_for('static', filename='images/default-user1.png') }}"
+                                class="dropdown-avatar" alt="">
                             {% endif %}
-
                             <h4>{{ user[3] }}</h4>
-
                             <p>{{ session["role"] }}</p>
-
                         </div>
 
-                        <a href="/profile">
-                            <i class="fas fa-user"></i>
-                            My Profile
-                        </a>
-
-                        <a href="/settings">
-                            <i class="fas fa-cog"></i>
-                            Settings
-                        </a>
-
-                        <a href="/change-password">
-                            <i class="fas fa-key"></i>
-                            Change Password
-                        </a>
-
+                        <a href="/profile"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="/settings"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="/change-password"><i class="fas fa-key"></i> Change Password</a>
                         <hr>
-
                         <a href="/logout" class="logout-link">
                             <i class="fas fa-sign-out-alt"></i>
                             Logout
                         </a>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
 
-        <!-- Welcome Banner -->
-        <div class="welcome-banner">
+        <section class="welcome-banner">
+            <h2>Inventory Overview</h2>
+            <p>Manage products, suppliers, sales, purchases, and stock health from one focused workspace.</p>
+        </section>
 
-            <h2>📊 Inventory Overview</h2>
-
-            <p>
-                Manage products, suppliers and stock levels
-                from one place.
-            </p>
-
-        </div>
-
-        <!-- Statistics Cards -->
-        <div class="stats-grid">
-
+        <section class="stats-grid" aria-label="Inventory metrics">
             <div class="stat-card">
                 <span>Total Products</span>
                 <h2>{{ total_products }}</h2>
             </div>
-
             <div class="stat-card">
                 <span>Low Stock Items</span>
                 <h2>{{ low_stock }}</h2>
             </div>
-
             <div class="stat-card">
                 <span>Today's Revenue</span>
                 <h2>{{ currency }} {{ "%.0f"|format(today_sales)|currency }}</h2>
             </div>
-
             <div class="stat-card">
                 <span>Today's Orders</span>
                 <h2>{{ today_orders }}</h2>
             </div>
-
             <div class="stat-card">
                 <span>Total Revenue</span>
                 <h2>{{ currency }} {{ "%.0f"|format(total_revenue)|currency }}</h2>
             </div>
-
             <div class="stat-card">
                 <span>Inventory Value</span>
                 <h2>{{ currency }} {{ "%.0f"|format(inventory_value)|currency }}</h2>
             </div>
+        </section>
 
-        </div>
+        <h3 class="section-title">Quick Actions</h3>
 
-        <!-- Quick Actions -->
-        <h3 class="section-title">
-            Quick Actions
-        </h3>
+        <section class="action-grid" aria-label="Quick actions">
+            <a href="/add-product" class="action-card"><i class="fas fa-plus"></i> Add Product</a>
+            <a href="/products" class="action-card"><i class="fas fa-box"></i> Products</a>
+            <a href="/suppliers" class="action-card"><i class="fas fa-truck"></i> Suppliers</a>
+            <a href="/reports" class="action-card"><i class="fas fa-chart-line"></i> Reports</a>
+            <a href="/about" class="action-card"><i class="fas fa-circle-info"></i> About StockFlow</a>
+        </section>
 
-        <div class="action-grid">
+        <h3 class="section-title">Inventory Widgets</h3>
 
-            <a href="/add-product" class="action-card">
-                ➕ Add Product
-            </a>
-
-            <a href="/products" class="action-card">
-                📦 Products
-            </a>
-
-            <a href="/suppliers" class="action-card">
-                🚚 Suppliers
-            </a>
-
-            <a href="/reports" class="action-card">
-                📈 Reports
-            </a>
-
-            <a href="/about" class="action-card">
-                ℹ️ About StockFlow
-            </a>
-
-        </div>
-
-        <!-- Widgets -->
-        <h3 class="section-title">
-            Inventory Widgets
-        </h3>
-
-        <div class="widgets-grid">
-
+        <section class="widgets-grid" aria-label="Inventory widgets">
             <div class="widget-card">
-
-                <h3>📦 Recent Products</h3>
-
+                <h3><i class="fas fa-box-open"></i> Recent Products</h3>
                 <ul>
-
                     {% for product in recent_products %}
-
-                    <li>
-                        {{ product[1] }}
-                        ({{ product[3] }} units)
-                    </li>
-
+                    <li>{{ product[1] }} ({{ product[3] }} units)</li>
                     {% endfor %}
-
                 </ul>
-
             </div>
 
             <div class="widget-card">
-
-                <h3>⚠️ Stock Alert</h3>
-
+                <h3><i class="fas fa-triangle-exclamation"></i> Stock Alert</h3>
                 {% if low_stock > 0 %}
-
-                <p>
-                    {{ low_stock }}
-                    products need restocking.
-                </p>
-
+                <p>{{ low_stock }} products need restocking.</p>
                 {% else %}
-
-                <p>
-                    Inventory levels are healthy.
-                </p>
-
+                <p>Inventory levels are healthy.</p>
                 {% endif %}
-
             </div>
 
             <div class="widget-card">
-
-                <h3>🏆 Top Selling Product</h3>
-
+                <h3><i class="fas fa-trophy"></i> Top Selling Product</h3>
                 {% if top_product %}
-
                 <h2>{{ top_product[0] }}</h2>
-
-                <p>
-                    {{ top_product[1] }} units sold
-                </p>
-
+                <p>{{ top_product[1] }} units sold</p>
                 {% else %}
-
                 <p>No sales recorded yet.</p>
-
                 {% endif %}
-
             </div>
+        </section>
 
-        </div>
-
-        <!-- Recent Sales & Purchases -->
-        <div class="widgets-grid">
-
+        <section class="widgets-grid" aria-label="Recent activity">
             <div class="widget-card">
-
-                <h3>💰 Recent Sales</h3>
-
+                <h3><i class="fas fa-receipt"></i> Recent Sales</h3>
                 <ul>
-
                     {% for sale in recent_sales %}
-
-                    <li>
-                        {{ sale[0] }}
-                        - {{ sale[1] }} units
-                        ({{ sale[2] }})
-                    </li>
-
+                    <li>{{ sale[0] }} - {{ sale[1] }} units ({{ sale[2] }})</li>
                     {% endfor %}
-
                 </ul>
-
             </div>
 
             <div class="widget-card">
-
-                <h3>🛒 Recent Purchases</h3>
-
+                <h3><i class="fas fa-cart-shopping"></i> Recent Purchases</h3>
                 <ul>
-
                     {% for purchase in recent_purchases %}
-
-                    <li>
-                        {{ purchase[0] }}
-                        - {{ purchase[1] }} units
-                        ({{ purchase[2] }})
-                    </li>
-
+                    <li>{{ purchase[0] }} - {{ purchase[1] }} units ({{ purchase[2] }})</li>
                     {% endfor %}
-
                 </ul>
-
             </div>
-
-        </div>
-
+        </section>
     </main>
-
 </div>
 
 {% endblock %}

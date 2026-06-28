@@ -2,34 +2,25 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-plus"></i> Add Product</h1>
 
-    <h1>Add Product</h1>
     <a href="javascript:history.back()" class="back-btn">
-
-        ← Back
-
+        <i class="fas fa-arrow-left"></i> Back
     </a>
+
     <div class="table-card">
-
         <form method="POST">
-
             <input type="text" name="name" placeholder="Product Name" required>
-
             <input type="text" name="category" placeholder="Category" required>
-
             <input type="number" name="stock" placeholder="Stock Quantity" required>
-
             <input type="number" step="0.01" name="price" placeholder="Price" required>
 
-            <button class="btn-green">
-                Save Product
+            <button class="btn-green" type="submit">
+                <i class="fas fa-check"></i> Save Product
             </button>
-
         </form>
-
     </div>
-
 </div>
 
 {% endblock %}

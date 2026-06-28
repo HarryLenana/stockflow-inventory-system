@@ -2,142 +2,79 @@
 
 {% block content %}
 
-<div class="add-user-wrapper">
-
+<div class="add-user-wrapper" id="mainContent">
     <div class="page-header">
-
         <a href="javascript:history.back()" class="back-btn">
-
-            ← Back
-
+            <i class="fas fa-arrow-left"></i> Back
         </a>
 
         <div>
-
-            <h1>👤 Add New User</h1>
-
+            <h1><i class="fas fa-user-plus"></i> Add New User</h1>
             <p>Create a new StockFlow user account.</p>
-
         </div>
 
         <a href="/users" class="back-btn">
-            ⬅ Back to Users
+            <i class="fas fa-arrow-left"></i> Back to Users
         </a>
-
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-
     {% for category, message in messages %}
-
-    <div class="flash-message {{ category }}">
-
-        {{ message }}
-
-    </div>
-
+    <div class="flash-message {{ category }}">{{ message }}</div>
     {% endfor %}
-
     {% endif %}
     {% endwith %}
 
     <div class="form-card">
-
         <form method="POST">
-
             <div class="form-grid">
-
                 <div>
-
                     <label>Full Name</label>
-
                     <input type="text" name="full_name" required>
-
                 </div>
 
                 <div>
-
                     <label>Username</label>
-
                     <input type="text" name="username" required>
-
                 </div>
 
                 <div>
-
                     <label>Email</label>
-
                     <input type="email" name="email" required>
-
                 </div>
 
                 <div>
-
                     <label>Phone</label>
-
                     <input type="text" name="phone">
-
                 </div>
 
                 <div>
-
                     <label>Password</label>
-
                     <input type="password" name="password" required>
-
                 </div>
 
                 <div>
-
                     <label>User Role</label>
-
                     <select name="role" required>
-
                         <option value="">Select Role</option>
-
-                        <option value="Administrator">
-                            Administrator
-                        </option>
-
-                        <option value="Manager">
-                            Manager
-                        </option>
-
-                        <option value="Cashier">
-                            Cashier
-                        </option>
-
-                        <option value="Store Keeper">
-                            Store Keeper
-                        </option>
-
+                        <option value="Administrator">Administrator</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Cashier">Cashier</option>
+                        <option value="Store Keeper">Store Keeper</option>
                     </select>
-
                 </div>
-
             </div>
 
             <div class="form-buttons">
-
                 <button type="submit" class="save-btn">
-
-                    ➕ Create User
-
+                    <i class="fas fa-plus"></i> Create User
                 </button>
 
-                <a href="/users" class="secondary-btn">
-
-                    Cancel
-
-                </a>
-
+                <a href="/users" class="secondary-btn">Cancel</a>
             </div>
-
         </form>
-
     </div>
-
 </div>
 
 {% endblock %}

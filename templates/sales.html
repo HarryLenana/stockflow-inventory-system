@@ -2,69 +2,47 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-cash-register"></i> Sales</h1>
 
-    <h1>💰 Sales</h1>
     <a href="/dashboard" class="back-btn">
-        ⬅ Dashboard
+        <i class="fas fa-arrow-left"></i> Dashboard
     </a>
 
     <div class="table-card">
-
-        <a href="/add-sale">
-            <button class="btn-green">
-                + Add Sale
-            </button>
+        <a href="/add-sale" class="btn-green">
+            <i class="fas fa-plus"></i> Add Sale
         </a>
 
-        <a href="/export-sales">
-            <button class="btn-green">
-                📥 Export CSV
-            </button>
+        <a href="/export-sales" class="btn-green">
+            <i class="fas fa-download"></i> Export CSV
         </a>
-
-        <br><br>
 
         <table>
-
             <thead>
-
                 <tr>
-
                     <th>ID</th>
                     <th>Product</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Customer</th>
                     <th>Date</th>
-
                 </tr>
-
             </thead>
-
             <tbody>
-
                 {% for sale in sales %}
-
                 <tr>
-
                     <td>{{ sale[0] }}</td>
                     <td>{{ sale[1] }}</td>
                     <td>{{ sale[2] }}</td>
                     <td>{{ currency }} {{ sale[3]|currency}}</td>
                     <td>{{ sale[4] }}</td>
                     <td>{{ sale[5] }}</td>
-
                 </tr>
-
                 {% endfor %}
-
             </tbody>
-
         </table>
-
     </div>
-
 </div>
 
 {% endblock %}

@@ -2,16 +2,14 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-chart-line"></i> Business Reports</h1>
 
-    <h1>📊 Business Reports</h1>
     <a href="/dashboard" class="back-btn">
-        ⬅ Dashboard
+        <i class="fas fa-arrow-left"></i> Dashboard
     </a>
 
-    </a>
     <div class="stats-grid">
-
         <div class="stat-card">
             <span>Total Products</span>
             <h2>{{ total_products }}</h2>
@@ -41,59 +39,40 @@
             <span>Inventory Value</span>
             <h2>{{ currency }} {{ "%.2f"|format(inventory_value)|currency }}</h2>
         </div>
-
     </div>
-
-    <br><br>
 
     <div class="table-card">
+        <h2><i class="fas fa-chart-pie"></i> Business Summary</h2>
 
-        <h2>📈 Business Summary</h2>
-
-        <br>
-
-        <p>
-            Total Products in System:
-            <strong>{{ total_products }}</strong>
-        </p>
-
-        <br>
-
-        <p>
-            Registered Suppliers:
-            <strong>{{ total_suppliers }}</strong>
-        </p>
-
-        <br>
-
-        <p>
-            Completed Purchases:
-            <strong>{{ total_purchases }}</strong>
-        </p>
-
-        <br>
-
-        <p>
-            Completed Sales:
-            <strong>{{ total_sales }}</strong>
-        </p>
-
-        <br>
-
-        <p>
-            Revenue Generated:
-            <strong>KES {{ "%.2f"|format(total_revenue) }}</strong>
-        </p>
-
-        <br>
-
-        <p>
-            Current Inventory Value:
-            <strong>KES {{ "%.2f"|format(inventory_value) }}</strong>
-        </p>
-
+        <table>
+            <tbody>
+                <tr>
+                    <td>Total Products in System</td>
+                    <td><strong>{{ total_products }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Registered Suppliers</td>
+                    <td><strong>{{ total_suppliers }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Completed Purchases</td>
+                    <td><strong>{{ total_purchases }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Completed Sales</td>
+                    <td><strong>{{ total_sales }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Revenue Generated</td>
+                    <td><strong>KES {{ "%.2f"|format(total_revenue) }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Current Inventory Value</td>
+                    <td><strong>KES {{ "%.2f"|format(inventory_value) }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
 </div>
 
 {% endblock %}

@@ -1,120 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="theme-color" content="#0F172A">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
-
     <title>StockFlow | Inventory Management System</title>
 
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
-
-
-    <!-- Extra CSS loaded by individual pages -->
     {% block head %}{% endblock %}
-
-    <!-- Charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 </head>
 
 <body>
+    <a class="skip-link" href="#mainContent">Skip to content</a>
 
     {% block content %}
     {% endblock %}
 
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <footer class="footer">
-        <p>StockFlow Inventory System | Built by Harry Lesh © 2026</p>
+        <p>StockFlow Inventory System | Built by Harry Lesh &copy; 2026</p>
     </footer>
 
-    <!-- Scroll To Top Button -->
-    <button id="topBtn" title="Go to top">
-        ↑
+    <button id="topBtn" class="scroll-top-btn" type="button" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up"></i>
     </button>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-
-    <script>
-
-        const topBtn = document.getElementById("topBtn");
-
-        window.onscroll = function () {
-
-            if (document.body.scrollTop > 200 ||
-                document.documentElement.scrollTop > 200) {
-
-                topBtn.style.display = "block";
-
-            } else {
-
-                topBtn.style.display = "none";
-            }
-        };
-
-        topBtn.onclick = function () {
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        };
-
-    </script>
-
-    <script>
-
-        const menuBtn = document.getElementById("menuBtn");
-        const menuContent = document.getElementById("menuContent");
-
-        if (menuBtn) {
-
-            menuBtn.addEventListener("click", function (e) {
-
-                e.stopPropagation();
-
-                if (menuContent.style.display === "block") {
-
-                    menuContent.style.display = "none";
-
-                } else {
-
-                    menuContent.style.display = "block";
-
-                }
-
-            });
-
-        }
-
-        window.addEventListener("click", function () {
-
-            if (menuContent) {
-
-                menuContent.style.display = "none";
-
-            }
-
-        });
-
-    </script>
-
 </body>
 
 </html>

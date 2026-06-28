@@ -2,28 +2,23 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container" id="mainContent">
+    <h1><i class="fas fa-database"></i> Restore Database</h1>
 
-    <h2>Restore Database</h2>
+    <div class="form-card">
+        <form method="POST" enctype="multipart/form-data">
+            <label>Select Backup File</label>
+            <input type="file" name="backup_file" accept=".db" required>
 
-    <form method="POST" enctype="multipart/form-data">
+            <div class="form-buttons">
+                <button class="primary-btn" type="submit">
+                    <i class="fas fa-rotate-left"></i> Restore Database
+                </button>
 
-        <label>Select Backup File</label><br><br>
-
-        <input type="file" name="backup_file" accept=".db" required>
-
-        <br><br>
-
-        <button class="primary-btn">
-            Restore Database
-        </button>
-
-        <a href="/settings" class="secondary-btn">
-            Cancel
-        </a>
-
-    </form>
-
+                <a href="/settings" class="secondary-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 {% endblock %}

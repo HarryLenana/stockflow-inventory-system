@@ -2,69 +2,47 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-cart-shopping"></i> Purchases</h1>
 
-    <h1>🛒 Purchases</h1>
     <a href="/dashboard" class="back-btn">
-        ⬅ Dashboard
+        <i class="fas fa-arrow-left"></i> Dashboard
     </a>
 
     <div class="table-card">
-
-        <a href="/add-purchase">
-            <button class="btn-green">
-                + Add Purchase
-            </button>
+        <a href="/add-purchase" class="btn-green">
+            <i class="fas fa-plus"></i> Add Purchase
         </a>
 
-        <a href="/export-sales">
-            <button class="btn-green">
-                📥 Export CSV
-            </button>
+        <a href="/export-sales" class="btn-green">
+            <i class="fas fa-download"></i> Export CSV
         </a>
-
-        <br><br>
 
         <table>
-
             <thead>
-
                 <tr>
-
                     <th>ID</th>
                     <th>Product</th>
                     <th>Supplier</th>
                     <th>Quantity</th>
                     <th>Cost</th>
                     <th>Date</th>
-
                 </tr>
-
             </thead>
-
             <tbody>
-
                 {% for purchase in purchases %}
-
                 <tr>
-
                     <td>{{ purchase[0] }}</td>
                     <td>{{ purchase[1] }}</td>
                     <td>{{ purchase[2] }}</td>
                     <td>{{ purchase[3] }}</td>
                     <td>{{ currency }} {{ purchase[4]|currency }}</td>
                     <td>{{ purchase[5] }}</td>
-
                 </tr>
-
                 {% endfor %}
-
             </tbody>
-
         </table>
-
     </div>
-
 </div>
 
 {% endblock %}

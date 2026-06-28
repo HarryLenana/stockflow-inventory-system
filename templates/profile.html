@@ -19,7 +19,7 @@
 
             {% else %}
 
-            <img class="profile-avatar" src="{{ url_for('static', filename='images/default-user.png') }}"
+            <img class="profile-avatar" src="{{ url_for('static', filename='images/default-user1.png') }}"
                 alt="Profile Picture">
 
             {% endif %}
@@ -34,25 +34,25 @@
 
             <li class="active">
                 <a href="#personal">
-                    👤 Personal Information
+                    <i class="fas fa-user"></i> Personal Information
                 </a>
             </li>
 
             <li>
                 <a href="#security">
-                    🔒 Security
+                    <i class="fas fa-lock"></i> Security
                 </a>
             </li>
 
             <li>
                 <a href="#activity">
-                    📊 Activity
+                    <i class="fas fa-chart-line"></i> Activity
                 </a>
             </li>
 
             <li>
                 <a href="#preferences">
-                    ⚙ Preferences
+                    <i class="fas fa-gear"></i> Preferences
                 </a>
             </li>
 
@@ -86,7 +86,7 @@
 
                 <a href="/dashboard" class="back-btn">
 
-                    ⬅ Dashboard
+                    <i class="fas fa-arrow-left"></i> Dashboard
 
                 </a>
 
@@ -98,7 +98,7 @@
 
             <div class="profile-card" id="personal">
 
-                <h2>👤 Personal Information</h2>
+                <h2><i class="fas fa-user"></i> Personal Information</h2>
 
                 <div class="profile-grid">
 
@@ -144,7 +144,7 @@
 
             <div class="profile-card" id="security">
 
-                <h2>🔒 Account Security</h2>
+                <h2><i class="fas fa-lock"></i> Account Security</h2>
 
                 <p class="section-description">
                     Manage your account security settings.
@@ -152,7 +152,7 @@
 
                 <div class="profile-button-group">
 
-                    <a href="/change-password" class="profile-btn"> 🔑 Change Password
+                    <a href="/change-password" class="profile-btn"><i class="fas fa-key"></i> Change Password
                     </a>
 
                     <a href="/upload-profile-picture" class="profile-btn">
@@ -161,7 +161,7 @@
 
                     <button type="button" class="profile-btn" disabled>
 
-                        🔐 Two-Factor Authentication
+                        <i class="fas fa-shield-halved"></i> Two-Factor Authentication
                         <small>(Coming Soon)</small>
 
                     </button>
@@ -176,13 +176,13 @@
 
             <div class="profile-card" id="activity">
 
-                <h2>📊 Recent Activity</h2>
+                <h2><i class="fas fa-chart-line"></i> Recent Activity</h2>
 
                 <div class="activity-list">
 
                     <div class="activity-item">
 
-                        <span>🟢</span>
+                        <span><i class="fas fa-circle-check"></i></span>
 
                         <div>
 
@@ -199,7 +199,7 @@
 
                     <div class="activity-item">
 
-                        <span>👤</span>
+                        <span><i class="fas fa-user"></i></span>
 
                         <div>
 
@@ -215,7 +215,7 @@
 
                     <div class="activity-item">
 
-                        <span>📅</span>
+                        <span><i class="fas fa-calendar"></i></span>
 
                         <div>
 
@@ -241,7 +241,7 @@
 
             <div class="profile-card" id="preferences">
 
-                <h2>⚙ Account Preferences</h2>
+                <h2><i class="fas fa-gear"></i> Account Preferences</h2>
 
                 <div class="checkbox-group">
 
@@ -289,19 +289,19 @@
 
                 <button type="submit" class="save-btn">
 
-                    💾 Save Changes
+                    <i class="fas fa-save"></i> Save Changes
 
                 </button>
 
                 <a href="/settings" class="secondary-btn">
 
-                    ⚙ Settings
+                    <i class="fas fa-gear"></i> Settings
 
                 </a>
 
                 <a href="/dashboard" class="back-btn">
 
-                    ⬅ Dashboard
+                    <i class="fas fa-arrow-left"></i> Dashboard
 
                 </a>
 

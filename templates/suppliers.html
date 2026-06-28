@@ -2,46 +2,31 @@
 
 {% block content %}
 
-<div class="page-container">
-
-    <h1>🚚 Suppliers Management</h1>
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-truck"></i> Suppliers Management</h1>
 
     <a href="/dashboard" class="back-btn">
-        ⬅ Dashboard
+        <i class="fas fa-arrow-left"></i> Dashboard
     </a>
 
-    </a>
     <div class="table-card">
-
-        <a href="/add-supplier">
-            <button class="btn-green">
-                + Add Supplier
-            </button>
-        </a>
-        <a href="/export-purchases">
-            <button class="btn-green">
-                📥 Export CSV
-            </button>
+        <a href="/add-supplier" class="btn-green">
+            <i class="fas fa-plus"></i> Add Supplier
         </a>
 
-        <br><br>
+        <a href="/export-purchases" class="btn-green">
+            <i class="fas fa-download"></i> Export CSV
+        </a>
 
         <form method="GET">
-
-            <input type="text" name="search" placeholder="Search Supplier">
-
-            <button class="btn-green">
-                Search
+            <input type="text" name="search" placeholder="Search suppliers">
+            <button class="btn-green" type="submit">
+                <i class="fas fa-magnifying-glass"></i> Search
             </button>
-
         </form>
 
-        <br>
-
         <table>
-
             <thead>
-
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -50,48 +35,30 @@
                     <th>Address</th>
                     <th>Actions</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
                 {% for supplier in suppliers %}
-
                 <tr>
-
                     <td>{{ supplier[0] }}</td>
                     <td>{{ supplier[1] }}</td>
                     <td>{{ supplier[2] }}</td>
                     <td>{{ supplier[3] }}</td>
                     <td>{{ supplier[4] }}</td>
-
-                    <td>
-
+                    <td class="actions">
                         <a href="/edit-supplier/{{ supplier.id }}" class="btn-edit">
-                            <i class="fas fa-edit"></i>
-                            Edit
+                            <i class="fas fa-edit"></i> Edit
                         </a>
-
-                        |
 
                         <a href="/delete-supplier/{{ supplier.id }}" class="btn-delete"
                             onclick="return confirm('Delete this supplier?')">
-                            <i class="fas fa-trash"></i>
-                            Delete
+                            <i class="fas fa-trash"></i> Delete
                         </a>
-
                     </td>
-
                 </tr>
-
                 {% endfor %}
-
             </tbody>
-
         </table>
-
     </div>
-
 </div>
 
 {% endblock %}

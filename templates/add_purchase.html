@@ -2,56 +2,36 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-plus"></i> Add Purchase</h1>
 
-    <h1>🛒 Add Purchase</h1>
     <a href="javascript:history.back()" class="back-btn">
-
-        ← Back
-
+        <i class="fas fa-arrow-left"></i> Back
     </a>
+
     <div class="table-card">
-
         <form method="POST">
-
             <select name="product_id" required>
-
                 {% for product in products %}
-
-                <option value="{{ product[0] }}">
-                    {{ product[1] }}
-                </option>
-
+                <option value="{{ product[0] }}">{{ product[1] }}</option>
                 {% endfor %}
-
             </select>
 
             <select name="supplier_id" required>
-
                 {% for supplier in suppliers %}
-
-                <option value="{{ supplier[0] }}">
-                    {{ supplier[1] }}
-                </option>
-
+                <option value="{{ supplier[0] }}">{{ supplier[1] }}</option>
                 {% endfor %}
-
             </select>
 
             <input type="number" name="quantity" placeholder="Quantity" required>
-
             <input type="number" step="0.01" name="cost" placeholder="Purchase Cost" required>
-
             <input type="date" name="purchase_date" required>
 
-            <button class="btn-green">
-                Save Purchase
+            <button class="btn-green" type="submit">
+                <i class="fas fa-check"></i> Save Purchase
             </button>
-
         </form>
-
     </div>
-
 </div>
 
 {% endblock %}

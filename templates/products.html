@@ -2,108 +2,70 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="page-container" id="mainContent">
+    <h1><i class="fas fa-box"></i> Products Management</h1>
 
-    <h1>📦 Products Management</h1>
     <a href="/dashboard" class="back-btn">
-        ⬅ Dashboard
+        <i class="fas fa-arrow-left"></i> Dashboard
     </a>
+
     <div class="table-card">
-
-        <a href="/add-product">
-            <button class="btn-green">
-                + Add Product
-            </button>
+        <a href="/add-product" class="btn-green">
+            <i class="fas fa-plus"></i> Add Product
         </a>
 
-        <a href="/export-products">
-            <button class="btn-green">
-                📥 Export CSV
-            </button>
+        <a href="/export-products" class="btn-green">
+            <i class="fas fa-download"></i> Export CSV
         </a>
-
-        <br><br>
 
         <form method="GET" action="/products">
-
-            <input type="text" name="search" placeholder="Search Product">
-
-            <button class="btn-green">
-                Search
+            <input type="text" name="search" placeholder="Search products">
+            <button class="btn-green" type="submit">
+                <i class="fas fa-magnifying-glass"></i> Search
             </button>
-
         </form>
-
-        <br>
 
         <h3>Total Products Found: {{ products|length }}</h3>
 
         <table>
-
             <thead>
-
                 <tr>
                     <th>ID</th>
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Stock</th>
-                    <th>@Price</th>
+                    <th>Price</th>
                     <th>Actions</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
                 {% for product in products %}
-
                 <tr>
-
                     <td>{{ product[0] }}</td>
-
                     <td>{{ product[1] }}</td>
-
                     <td>{{ product[2] }}</td>
-
                     <td>
-
-                        {% if product[3] < 10 %} ⚠️ {{ product[3] }} {% else %} {{ product[3] }} {% endif %} </td>
-
-                    <td>
-                        {{ currency }} {{ product[4]|currency }}
+                        {% if product[3] < 10 %}
+                        <span class="status-badge"><i class="fas fa-triangle-exclamation"></i> {{ product[3] }}</span>
+                        {% else %}
+                        {{ product[3] }}
+                        {% endif %}
                     </td>
-
-                    <td>
-
+                    <td>{{ currency }} {{ product[4]|currency }}</td>
+                    <td class="actions">
                         <a href="/edit-product/{{ product.id }}" class="btn-edit">
-
-                            <i class="fas fa-pen-to-square"></i>
-                            Edit
-
+                            <i class="fas fa-pen-to-square"></i> Edit
                         </a>
-
-                        |
-
                         <a href="/delete-product/{{ product.id }}" class="btn-delete"
                             onclick="return confirm('Delete this product?')">
-
-                            <i class="fas fa-trash"></i>
-                            Delete
-
+                            <i class="fas fa-trash"></i> Delete
                         </a>
-
                     </td>
-
                 </tr>
-
                 {% endfor %}
-
             </tbody>
-
         </table>
-
     </div>
-
 </div>
 
 {% endblock %}
