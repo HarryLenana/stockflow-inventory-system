@@ -115,3 +115,28 @@ if (inventoryCanvas) {
     });
 
 }
+
+const userBtn = document.getElementById("userBtn");
+const userDropdown = document.getElementById("userDropdown");
+
+if (userBtn) {
+
+    userBtn.addEventListener("click", function (e) {
+
+        e.stopPropagation();
+
+        userDropdown.classList.toggle("show");
+
+    });
+
+}
+
+window.addEventListener("click", function () {
+
+    if (userDropdown) {
+
+        userDropdown.classList.remove("show");
+
+    }
+
+});

@@ -308,30 +308,48 @@
 
                     <div class="form-grid">
 
-                        <div>
-
+                        <div class="form-group">
                             <label>Currency</label>
 
-                            <select name="currency">
+                            <select name="currency" class="form-control">
 
                                 <option value="KES" {% if settings[6]=="KES" %}selected{% endif %}>
-                                    Kenyan Shilling (KES)
+                                    🇰🇪 Kenyan Shilling (KES)
                                 </option>
 
                                 <option value="USD" {% if settings[6]=="USD" %}selected{% endif %}>
-                                    US Dollar (USD)
+                                    🇺🇸 US Dollar (USD)
                                 </option>
 
                                 <option value="EUR" {% if settings[6]=="EUR" %}selected{% endif %}>
-                                    Euro (EUR)
+                                    🇪🇺 Euro (EUR)
                                 </option>
 
                                 <option value="GBP" {% if settings[6]=="GBP" %}selected{% endif %}>
-                                    British Pound (GBP)
+                                    🇬🇧 British Pound (GBP)
+                                </option>
+
+                                <option value="TZS" {% if settings[6]=="TZS" %}selected{% endif %}>
+                                    🇹🇿 Tanzanian Shilling (TZS)
+                                </option>
+
+                                <option value="UGX" {% if settings[6]=="UGX" %}selected{% endif %}>
+                                    🇺🇬 Ugandan Shilling (UGX)
+                                </option>
+
+                                <option value="RWF" {% if settings[6]=="RWF" %}selected{% endif %}>
+                                    🇷🇼 Rwandan Franc (RWF)
+                                </option>
+
+                                <option value="ZAR" {% if settings[6]=="ZAR" %}selected{% endif %}>
+                                    🇿🇦 South African Rand (ZAR)
+                                </option>
+
+                                <option value="NGN" {% if settings[6]=="NGN" %}selected{% endif %}>
+                                    🇳🇬 Nigerian Naira (NGN)
                                 </option>
 
                             </select>
-
                         </div>
 
                         <div>
@@ -566,17 +584,13 @@
 
                     <div class="settings-actions">
 
-                        <button type="button" class="secondary-btn">
+                        <a href="{{ url_for('settings.backup_database') }}" class="secondary-btn">
+                            💾 Backup Database
+                        </a>
 
-                            📥 Backup Database
-
-                        </button>
-
-                        <button type="button" class="secondary-btn">
-
+                        <a href="{{ url_for('settings.restore_database') }}" class="secondary-btn">
                             📤 Restore Backup
-
-                        </button>
+                        </a>
 
                     </div>
 
@@ -596,23 +610,17 @@
 
                     <div class="settings-actions">
 
-                        <button type="button" class="secondary-btn">
-
+                        <a href="/export-pdf" class="secondary-btn">
                             📄 Export PDF
+                        </a>
 
-                        </button>
-
-                        <button type="button" class="secondary-btn">
-
+                        <a href="/export-excel" class="secondary-btn">
                             📊 Export Excel
+                        </a>
 
-                        </button>
-
-                        <button type="button" class="secondary-btn">
-
+                        <a href="/export-csv" class="secondary-btn">
                             📑 Export CSV
-
-                        </button>
+                        </a>
 
                     </div>
 

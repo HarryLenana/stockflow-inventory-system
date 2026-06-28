@@ -8,6 +8,7 @@
     <a href="/dashboard" class="back-btn">
         ⬅ Dashboard
     </a>
+
     <div class="table-card">
 
         <a href="/add-purchase">
@@ -51,7 +52,7 @@
                     <td>{{ purchase[1] }}</td>
                     <td>{{ purchase[2] }}</td>
                     <td>{{ purchase[3] }}</td>
-                    <td>KES {{ purchase[4] }}</td>
+                    <td>{{ currency }} {{ purchase[4]|currency }}</td>
                     <td>{{ purchase[5] }}</td>
 
                 </tr>

@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h2>Restore Database</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <label>Select Backup File</label><br><br>
+
+        <input type="file" name="backup_file" accept=".db" required>
+
+        <br><br>
+
+        <button class="primary-btn">
+            Restore Database
+        </button>
+
+        <a href="/settings" class="secondary-btn">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -2,50 +2,450 @@
 
 {% block content %}
 
-<div class="page-container">
+<div class="about-page">
 
-    <div class="table-card">
+    <!-- ==========================
+         HERO SECTION
+    =========================== -->
+
+    <section class="hero-section">
+
         <a href="/dashboard" class="back-btn">
-            ⬅ Dashboard
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
         </a>
-        <h1>About StockFlow</h1>
 
-        <br>
+        <div class="hero-content">
+
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="company-logo" alt="StockFlow Logo">
+
+            <h1>StockFlow</h1>
+
+            <h3>Smart Inventory Management System</h3>
+
+            <p>
+                StockFlow is a modern inventory management solution designed to
+                help businesses efficiently manage products, suppliers,
+                purchases, sales and business reporting through a simple,
+                secure and user-friendly interface.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================
+         INTRODUCTION
+    =========================== -->
+
+    <section class="info-card">
+
+        <div class="card-header">
+
+            <i class="fas fa-circle-info"></i>
+
+            <h2>About StockFlow</h2>
+
+        </div>
 
         <p>
-            StockFlow is a modern inventory management system
-            built using Flask, SQLite, HTML, CSS and JavaScript.
+
+            StockFlow is a modern inventory management system built using
+            Flask, SQLite, HTML, CSS and JavaScript.
+
+            The system simplifies inventory operations by providing tools for
+            managing products, suppliers, purchases, sales, reporting and
+            administrative settings within one integrated platform.
+
         </p>
 
-        <br>
+    </section>
 
-        <h3>Features</h3>
 
-        <ul>
-            <li>Product Management</li>
-            <li>Supplier Management</li>
-            <li>Purchase Tracking</li>
-            <li>Sales Tracking</li>
-            <li>Revenue Analytics</li>
-            <li>CSV Export</li>
-            <li>Dashboard Reporting</li>
-        </ul>
+    <!-- ==========================
+         MISSION & VISION
+    =========================== -->
 
-        <br>
+    <div class="two-column">
 
-        <h3>Technology Stack</h3>
 
-        <ul>
-            <li>Python Flask</li>
-            <li>SQLite Database</li>
-            <li>HTML5</li>
-            <li>CSS3</li>
-            <li>JavaScript</li>
-            <li>Chart.js</li>
-        </ul>
+        <!-- Mission -->
+
+        <section class="info-card">
+
+            <div class="card-header">
+
+                <i class="fas fa-bullseye"></i>
+
+                <h2>Our Mission</h2>
+
+            </div>
+
+            <p>
+
+                To provide businesses with a reliable, secure and easy-to-use
+                inventory management solution that improves efficiency,
+                minimizes stock losses and supports better business decisions.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- Vision -->
+
+        <section class="info-card">
+
+            <div class="card-header">
+
+                <i class="fas fa-eye"></i>
+
+                <h2>Our Vision</h2>
+
+            </div>
+
+            <p>
+
+                To become one of the leading inventory management platforms by
+                delivering innovative, scalable and intelligent business
+                solutions for organizations of every size.
+
+            </p>
+
+        </section>
+
 
     </div>
 
+    <!-- ==========================
+         FEATURES
+    =========================== -->
+
+    <section class="info-card">
+
+        <div class="card-header">
+
+            <i class="fas fa-star"></i>
+
+            <h2>Key Features</h2>
+
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feature-box">
+                <i class="fas fa-box"></i>
+                <h4>Product Management</h4>
+                <p>Manage inventory items with categories, stock levels and pricing.</p>
+            </div>
+
+            <div class="feature-box">
+                <i class="fas fa-truck"></i>
+                <h4>Supplier Management</h4>
+                <p>Store supplier information including contacts and addresses.</p>
+            </div>
+
+            <div class="feature-box">
+                <i class="fas fa-cart-plus"></i>
+                <h4>Purchase Tracking</h4>
+                <p>Record purchases and automatically update inventory stock.</p>
+            </div>
+
+            <div class="feature-box">
+                <i class="fas fa-cash-register"></i>
+                <h4>Sales Tracking</h4>
+                <p>Monitor customer sales while reducing product stock automatically.</p>
+            </div>
+
+            <div class="feature-box">
+                <i class="fas fa-chart-line"></i>
+                <h4>Revenue Analytics</h4>
+                <p>Generate insights into business performance and revenue.</p>
+            </div>
+
+            <div class="feature-box">
+                <i class="fas fa-file-csv"></i>
+                <h4>Data Export</h4>
+                <p>Export reports in CSV, Excel and PDF formats.</p>
+            </div>
+
+            <div class="feature-box">
+                <i class="fas fa-chart-pie"></i>
+                <h4>Dashboard Reports</h4>
+                <p>View business summaries through visual charts and statistics.</p>
+            </div>
+
+            <div class="feature-box">
+                <i class="fas fa-user-shield"></i>
+                <h4>User Management</h4>
+                <p>Role-based access control for administrators, managers and cashiers.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================
+         TECHNOLOGY STACK
+    =========================== -->
+
+    <section class="info-card">
+
+        <div class="card-header">
+
+            <i class="fas fa-code"></i>
+
+            <h2>Technology Stack</h2>
+
+        </div>
+
+        <div class="tech-grid">
+
+            <div class="tech-item">
+                <i class="fab fa-python"></i>
+                <span>Python</span>
+            </div>
+
+            <div class="tech-item">
+                <i class="fas fa-bolt"></i>
+                <span>Flask</span>
+            </div>
+
+            <div class="tech-item">
+                <i class="fas fa-database"></i>
+                <span>SQLite</span>
+            </div>
+
+            <div class="tech-item">
+                <i class="fab fa-html5"></i>
+                <span>HTML5</span>
+            </div>
+
+            <div class="tech-item">
+                <i class="fab fa-css3-alt"></i>
+                <span>CSS3</span>
+            </div>
+
+            <div class="tech-item">
+                <i class="fab fa-js"></i>
+                <span>JavaScript</span>
+            </div>
+
+            <div class="tech-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Chart.js</span>
+            </div>
+
+            <div class="tech-item">
+                <i class="fas fa-file-pdf"></i>
+                <span>ReportLab</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================
+         DEVELOPER
+    =========================== -->
+
+    <section class="info-card">
+
+        <div class="card-header">
+
+            <i class="fas fa-user"></i>
+
+            <h2>Meet the Developer</h2>
+
+        </div>
+
+        <div class="developer-section">
+
+            <img src="{{ url_for('static', filename='images/me.jpg') }}" alt="Developer" class="developer-image">
+
+            <div class="developer-info">
+
+                <h2>Harry Lenana</h2>
+
+                <h4>Full Stack Python Developer</h4>
+
+                <p>
+
+                    Passionate about building modern business solutions using
+                    Python, Flask, SQLite, HTML, CSS and JavaScript.
+
+                    StockFlow was designed to simplify inventory management,
+                    improve productivity and provide businesses with reliable,
+                    efficient and user-friendly software.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================
+         PROJECT STATUS
+    =========================== -->
+
+    <section class="info-card">
+
+        <div class="card-header">
+
+            <i class="fas fa-tasks"></i>
+
+            <h2>Project Status</h2>
+
+        </div>
+
+        <div class="status-grid">
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Authentication System
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Dashboard
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Product Management
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Supplier Management
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Purchase Management
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Sales Management
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Reports & Analytics
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Settings Module
+            </div>
+
+            <div class="status-item completed">
+                <i class="fas fa-check-circle"></i>
+                Data Export
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================
+         CONTACT
+    =========================== -->
+
+    <section class="info-card">
+
+        <div class="card-header">
+
+            <i class="fas fa-address-card"></i>
+
+            <h2>Contact Information</h2>
+
+        </div>
+
+        <div class="contact-grid">
+
+            <div class="contact-box">
+
+                <i class="fas fa-envelope"></i>
+
+                <h4>Email</h4>
+
+                <p>your@email.com</p>
+
+            </div>
+
+            <div class="contact-box">
+
+                <i class="fas fa-globe"></i>
+
+                <h4>Website</h4>
+
+                <p>Coming Soon</p>
+
+            </div>
+
+            <div class="contact-box">
+
+                <i class="fab fa-github"></i>
+
+                <h4>GitHub</h4>
+
+                <p>github.com/yourusername</p>
+
+            </div>
+
+            <div class="contact-box">
+
+                <i class="fab fa-linkedin"></i>
+
+                <h4>LinkedIn</h4>
+
+                <p>linkedin.com/in/yourname</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================
+         FOOTER
+    =========================== -->
+
+    <footer class="about-footer">
+
+        <h3>StockFlow Inventory Management System</h3>
+
+        <p>
+
+            Developed with ❤️ using Flask, SQLite and modern web technologies.
+
+        </p>
+
+        <p>
+
+            © 2026 StockFlow. All Rights Reserved.
+
+        </p>
+
+    </footer>
+
 </div>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
 
 {% endblock %}

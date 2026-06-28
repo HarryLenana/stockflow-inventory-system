@@ -8,6 +8,7 @@
     <a href="/dashboard" class="back-btn">
         ⬅ Dashboard
     </a>
+
     <div class="table-card">
 
         <a href="/add-sale">
@@ -50,7 +51,7 @@
                     <td>{{ sale[0] }}</td>
                     <td>{{ sale[1] }}</td>
                     <td>{{ sale[2] }}</td>
-                    <td>KES {{ sale[3] }}</td>
+                    <td>{{ currency }} {{ sale[3]|currency}}</td>
                     <td>{{ sale[4] }}</td>
                     <td>{{ sale[5] }}</td>
 

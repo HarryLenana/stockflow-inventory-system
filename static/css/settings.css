@@ -271,23 +271,20 @@ label {
 /* SECONDARY BUTTON */
 
 .secondary-btn {
-
-    background: #0f172a;
+    display: inline-block;
+    background: #1b2238;
     color: white;
-    border: none;
-    padding: 14px 26px;
-    border-radius: 12px;
-    cursor: pointer;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 600;
     transition: .3s;
-    font-size: 15px;
-
+    border: none;
+    cursor: pointer;
 }
 
 .secondary-btn:hover {
-
-    background: #1e293b;
+    background: #16a34a;
     transform: translateY(-2px);
-
 }
 
 /* BACK BUTTON */
@@ -535,10 +532,9 @@ label {
 
     .settings-actions button,
     .settings-actions a {
-
-        width: 100%;
-
+        flex: 1;
         text-align: center;
+        text-decoration: none;
 
     }
 

@@ -84,3 +84,88 @@ def create_tables():
 
     conn.commit()
     conn.close()
+
+# ============================================
+# CREATE SETTINGS TABLE
+# ============================================
+
+
+def create_settings_table():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS settings (
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            company_name TEXT,
+            company_email TEXT,
+            company_phone TEXT,
+            company_address TEXT,
+            company_website TEXT,
+
+            currency TEXT,
+
+            tax_rate REAL,
+
+            low_stock INTEGER,
+
+            dark_mode INTEGER,
+
+            email_alerts INTEGER,
+
+            sales_alerts INTEGER,
+
+            purchase_alerts INTEGER,
+
+            stock_alerts INTEGER
+
+        )
+    """)
+
+    cursor.execute("SELECT COUNT(*) FROM settings")
+
+    if cursor.fetchone()[0] == 0:
+
+        cursor.execute("""
+            INSERT INTO settings (
+
+                company_name,
+                company_email,
+                company_phone,
+                company_address,
+                company_website,
+                currency,
+                tax_rate,
+                low_stock,
+                dark_mode,
+                email_alerts,
+                sales_alerts,
+                purchase_alerts,
+                stock_alerts
+
+            )
+
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+
+            "StockFlow Ltd",
+            "",
+            "",
+            "",
+            "",
+            "KES",
+            16,
+            10,
+            0,
+            1,
+            1,
+            1,
+            1
+
+        ))
+
+    conn.commit()
+    conn.close()

@@ -5,9 +5,11 @@
 <div class="page-container">
 
     <h1>🚚 Suppliers Management</h1>
+
     <a href="/dashboard" class="back-btn">
         ⬅ Dashboard
     </a>
+
     </a>
     <div class="table-card">
 
@@ -65,14 +67,17 @@
 
                     <td>
 
-                        <a href="/edit-supplier/{{ supplier[0] }}">
-                            ✏️ Edit
+                        <a href="/edit-supplier/{{ supplier.id }}" class="btn-edit">
+                            <i class="fas fa-edit"></i>
+                            Edit
                         </a>
 
                         |
 
-                        <a href="/delete-supplier/{{ supplier[0] }}" onclick="return confirm('Delete supplier?')">
-                            🗑 Delete
+                        <a href="/delete-supplier/{{ supplier.id }}" class="btn-delete"
+                            onclick="return confirm('Delete this supplier?')">
+                            <i class="fas fa-trash"></i>
+                            Delete
                         </a>
 
                     </td>

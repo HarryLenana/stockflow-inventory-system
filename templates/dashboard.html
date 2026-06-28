@@ -62,10 +62,12 @@
             </li>
 
             <li>
+                {% if session["role"] == "Administrator" %}
                 <a href="/users">
                     <i class="fas fa-user"></i>
                     Users
                 </a>
+                {% endif %}
             </li>
 
         </ul>
@@ -200,8 +202,67 @@
 
                 </div>
 
-                <div class="profile-box">
-                    👤 Admin
+                <div class="user-menu">
+
+                    <button class="user-btn" id="userBtn">
+
+                        {% if user and user[6] %}
+                        <img src="{{ url_for('static', filename='uploads/users/' + user[6]) }}" class="nav-avatar">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/default-user.png') }}" class="nav-avatar">
+                        {% endif %}
+
+                        <div class="user-info">
+                            <strong>{{ user[3] }}</strong>
+                            <small>{{ session["role"] }}</small>
+                        </div>
+
+                        <i class="fas fa-chevron-down"></i>
+
+                    </button>
+
+                    <div class="user-dropdown" id="userDropdown">
+
+                        <div class="dropdown-header">
+
+                            {% if user and user[6] %}
+                            <img src="{{ url_for('static', filename='uploads/users/' + user[6]) }}"
+                                class="dropdown-avatar">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='images/default-user.png') }}"
+                                class="dropdown-avatar">
+                            {% endif %}
+
+                            <h4>{{ user[3] }}</h4>
+
+                            <p>{{ session["role"] }}</p>
+
+                        </div>
+
+                        <a href="/profile">
+                            <i class="fas fa-user"></i>
+                            My Profile
+                        </a>
+
+                        <a href="/settings">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </a>
+
+                        <a href="/change-password">
+                            <i class="fas fa-key"></i>
+                            Change Password
+                        </a>
+
+                        <hr>
+
+                        <a href="/logout" class="logout-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -235,7 +296,7 @@
 
             <div class="stat-card">
                 <span>Today's Revenue</span>
-                <h2>KES {{ "%.0f"|format(today_sales) }}</h2>
+                <h2>{{ currency }} {{ "%.0f"|format(today_sales)|currency }}</h2>
             </div>
 
             <div class="stat-card">
@@ -245,12 +306,12 @@
 
             <div class="stat-card">
                 <span>Total Revenue</span>
-                <h2>KES {{ "%.0f"|format(total_revenue) }}</h2>
+                <h2>{{ currency }} {{ "%.0f"|format(total_revenue)|currency }}</h2>
             </div>
 
             <div class="stat-card">
                 <span>Inventory Value</span>
-                <h2>KES {{ "%.0f"|format(inventory_value) }}</h2>
+                <h2>{{ currency }} {{ "%.0f"|format(inventory_value)|currency }}</h2>
             </div>
 
         </div>

@@ -8,6 +8,7 @@
     <a href="/dashboard" class="back-btn">
         ⬅ Dashboard
     </a>
+
     </a>
     <div class="stats-grid">
 
@@ -33,12 +34,12 @@
 
         <div class="stat-card">
             <span>Total Revenue</span>
-            <h2>KES {{ "%.2f"|format(total_revenue) }}</h2>
+            <h2>{{ currency }} {{ "%.2f"|format(total_revenue)|currency }}</h2>
         </div>
 
         <div class="stat-card">
             <span>Inventory Value</span>
-            <h2>KES {{ "%.2f"|format(inventory_value) }}</h2>
+            <h2>{{ currency }} {{ "%.2f"|format(inventory_value)|currency }}</h2>
         </div>
 
     </div>

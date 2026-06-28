@@ -4,20 +4,33 @@
 
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
     <title>StockFlow | Inventory Management System</title>
 
+    <!-- Global CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- Page CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
 
+
+    <!-- Extra CSS loaded by individual pages -->
+    {% block head %}{% endblock %}
+
+    <!-- Charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>

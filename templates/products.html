@@ -47,7 +47,7 @@
                     <th>Product Name</th>
                     <th>Category</th>
                     <th>Stock</th>
-                    <th>Price</th>
+                    <th>@Price</th>
                     <th>Actions</th>
                 </tr>
 
@@ -70,19 +70,26 @@
                         {% if product[3] < 10 %} ⚠️ {{ product[3] }} {% else %} {{ product[3] }} {% endif %} </td>
 
                     <td>
-                        KES {{ product[4] }}
+                        {{ currency }} {{ product[4]|currency }}
                     </td>
 
                     <td>
 
-                        <a href="/edit-product/{{ product[0] }}">
-                            ✏️ Edit
+                        <a href="/edit-product/{{ product.id }}" class="btn-edit">
+
+                            <i class="fas fa-pen-to-square"></i>
+                            Edit
+
                         </a>
 
                         |
 
-                        <a href="/delete-product/{{ product[0] }}" onclick="return confirm('Delete this product?')">
-                            🗑 Delete
+                        <a href="/delete-product/{{ product.id }}" class="btn-delete"
+                            onclick="return confirm('Delete this product?')">
+
+                            <i class="fas fa-trash"></i>
+                            Delete
+
                         </a>
 
                     </td>
