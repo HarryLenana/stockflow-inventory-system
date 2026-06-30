@@ -17,7 +17,7 @@ from utils.decorators import (
 sales_bp = Blueprint("sales", __name__)
 
 # ============================================
-# SALE
+# SALES
 # ============================================
 
 

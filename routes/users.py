@@ -259,7 +259,7 @@ def edit_user(user_id):
 # DELETE USER
 # ============================================
 
-@users_bp.route("/delete_user/<int:user_id>")
+@users_bp.route("/delete-user/<int:user_id>")
 @login_required
 @roles_required("Administrator")
 def delete_user(user_id):

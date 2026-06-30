@@ -2,6 +2,7 @@ from functools import wraps
 from flask import session, redirect, flash
 
 from database.models import get_connection
+
 # ==========================
 # LOGIN REQUIRED
 # ==========================
